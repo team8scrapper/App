@@ -11,7 +11,7 @@ discount_list = []
 
 url = "https://www.continente.pt/bebidas-e-garrafeira/vinhos/?start=0&srule=FOOD-Bebidas&pmin=0.01"
 
-for i in range(1, 3)
+for i in range(1, 3):
 
 	r = request.get(url)
 	soup = BeautifulSoup(r.text, "lxml")
@@ -34,14 +34,14 @@ for i in block:
 	quantity_final = i.find("p", class_ = "pwc-tile--quantity col-tile--quantity")
 	if (quantity_final == None):
 		quantity = "n/a"
-	else
+	else:
 		quantity = quantity_final.text
 	quantity_list.append(quantity)
 
 	discount_final = i.find("span", class_ = "ct-product-tile-badge-value--pvpr col-product-tile-badge-value--pvpr")
 	if (discount_final == None):
 		discount = "n/a"
-	else
+	else:
 		discount = discount_final.text
 	discount_list.append(descount.strip("\n \t\r\v"))
 
