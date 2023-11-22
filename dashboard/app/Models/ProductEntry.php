@@ -25,4 +25,9 @@ class ProductEntry extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
 }

@@ -19,14 +19,13 @@ return new class extends Migration
             $table->boolean('discount')->default(false);
             $table->string('url');
             $table->string('product_id');
-            $table->string('store_name');
+            $table->unsignedBigInteger('store_id')->index();
             $table->string('product_name');
             $table->string('currency');
             $table->string('location')->nullable();
 
-
-
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade');
         });
     }
 

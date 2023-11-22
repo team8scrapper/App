@@ -40,7 +40,7 @@ function getPriceInDate(records, storeName) {
     const res = [];
 
     lastWeek.forEach((date) => {
-        let item = records.find((el) => {
+        let item = records?.find((el) => {
             if (
                 el.store_name == storeName &&
                 dayjs(date).isSame(el.created_at, "day")
@@ -73,6 +73,8 @@ export default function Edit({ auth, product, history }) {
     const [tabValue, setTabValue] = useState(0);
     const [currentTab, setCurrentTab] = useState(0);
 
+    console.log({ product, history });
+
     const uniqueOffers = product.product_entries.filter(
         (value, index, self) => {
             return (
@@ -82,7 +84,7 @@ export default function Edit({ auth, product, history }) {
         }
     );
 
-    const realdata = fillData(history.product_entries);
+    const realdata = fillData(history?.product_entries);
 
     return (
         <AuthenticatedLayout
@@ -169,14 +171,14 @@ export default function Edit({ auth, product, history }) {
                         <h3 className="text-xl mb-4 font-medium text-gray-900">
                             Offers
                         </h3>
-                        {uniqueOffers?.map((entry) => (
+                        {product.product_entries?.map((entry) => (
                             <>
                                 <div
                                     key={entry.id}
                                     className="flex items-center p-4 mb-3 sm:p-8 bg-white shadow sm:rounded-lg"
                                 >
                                     <img
-                                        src={getStoreImg(entry.store_name)}
+                                        src={entry?.store?.logo_url}
                                         alt={entry.store_name}
                                         className="w-32 h-10 mr-6 object-contain"
                                     />

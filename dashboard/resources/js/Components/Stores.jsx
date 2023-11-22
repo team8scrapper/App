@@ -43,7 +43,10 @@ export default function Stores({ stores, admin }) {
                                 {store.name}
                             </td>
                             <td className="px-6 font-medium text-gray-900 py-4">
-                                <img src={store.logo_url} />
+                                <img
+                                    className="max-h-8 max-w-20"
+                                    src={store.logo_url}
+                                />
                             </td>
                             <td className="px-6 py-4">
                                 {admin && (
