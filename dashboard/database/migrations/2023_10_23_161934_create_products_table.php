@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->string('name');
+            $table->string('img');
             $table->string('brand');
             $table->string('sub_brand')->nullable();
             $table->integer('capacity');

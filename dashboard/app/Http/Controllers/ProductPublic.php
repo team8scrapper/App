@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Product;
+use App\Models\ProductEntry;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class ProductPublic extends Controller
 {
@@ -29,14 +31,11 @@ class ProductPublic extends Controller
     public function show(Product $product)
     {
         return Inertia::render('Products/Show', [
-            //'product' => $product->load('product_entries'),
-
             'product' => $product->load(['product_entries' => function ($query) {
-                $query->whereDate('created_at', today(Auth::user()->timezone))->orderBy('created_at', 'DESC');
+                $query->whereDate('created_at', Carbon::today())->orderBy('created_at', 'DESC')->with('store')->get();
             } ]),
 
-            'history' => $product->load('product_entries'),
-
+            'history' => ProductEntry::with('store')->where('product_id', $product->id)->get(),
         ]);
     }
 }
