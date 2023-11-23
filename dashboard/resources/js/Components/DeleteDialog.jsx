@@ -2,6 +2,7 @@ import React from "react";
 import { router } from "@inertiajs/react";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import { toast } from "react-toastify";
 
 export default function DeleteDialog(url, msg) {
     confirmAlert({
@@ -51,7 +52,15 @@ export default function DeleteDialog(url, msg) {
                         </h3>
                         <button
                             onClick={() => {
-                                router.delete(url, { preserveScroll: true });
+                                router.delete(url, {
+                                    preserveScroll: true,
+                                    onSuccess: () =>
+                                        toast.success(
+                                            "Item deleted successfully."
+                                        ),
+                                    onError: () =>
+                                        toast.error("Error deleting an item!"),
+                                });
                                 onClose();
                             }}
                             type="button"

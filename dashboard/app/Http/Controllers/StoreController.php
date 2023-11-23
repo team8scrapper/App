@@ -101,8 +101,14 @@ class StoreController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Store $store)
+    public function destroy(Request $request, Store $store)
     {
-        //
+        if ($request->user()->hasRole('admin')) {
+            $store->delete();
+
+            return redirect(route('admin.stores.index'));
+        }
+
+        return redirect()->back();
     }
 }

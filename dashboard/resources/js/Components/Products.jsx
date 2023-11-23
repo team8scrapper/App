@@ -2,15 +2,15 @@ import React from "react";
 import { router } from "@inertiajs/react";
 import dayjs from "dayjs";
 
-// import deleteDialog from "@/Components/DeleteDialog";
+import deleteDialog from "@/Components/DeleteDialog";
 
 export default function Products({ products, admin }) {
-    // const deleteProduct = (productId) => {
-    //     deleteDialog(
-    //         `/products/${productId}`,
-    //         "Are you sure you want to delete this product?"
-    //     );
-    // };
+    const deleteProduct = (productId, productName) => {
+        deleteDialog(
+            route("admin.products.destroy", productId),
+            `Are you sure you want to delete "${productName}"?`
+        );
+    };
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500">
@@ -71,7 +71,10 @@ export default function Products({ products, admin }) {
                                         </a>
                                         <button
                                             onClick={() =>
-                                                deleteProduct(product.id)
+                                                deleteProduct(
+                                                    product.id,
+                                                    product.name
+                                                )
                                             }
                                             className="font-medium text-red-600 hover:underline"
                                         >
