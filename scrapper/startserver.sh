@@ -1,1 +1,1 @@
-$(~/.local/bin/uvicorn server:app --reload)
+~/.local/bin/uvicorn server:app --reload
