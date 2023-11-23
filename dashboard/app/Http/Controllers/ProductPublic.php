@@ -31,10 +31,9 @@ class ProductPublic extends Controller
     public function show(Product $product)
     {
         return Inertia::render('Products/Show', [
-            'product' => $product->load(['product_entries' => function ($query) {
-                $query->whereDate('created_at', Carbon::today())->orderBy('created_at', 'DESC')->with('store')->get();
-            } ]),
-
+            'product' => $product,
+            'today' => ProductEntry::with('store')->where('product_id', $product->id)->whereDate('created_at', Carbon::today())->orderBy('price', 'ASC')->get(),
+            'yesterday' => ProductEntry::with('store')->where('product_id', $product->id)->whereDate('created_at', Carbon::yesterday())->orderBy('price', 'ASC')->get(),
             'history' => ProductEntry::with('store')->where('product_id', $product->id)->get(),
         ]);
     }

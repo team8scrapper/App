@@ -10,21 +10,9 @@ import Tab from "@/Components/Tab";
 import ProductPriceHistory from "@/Components/ProductPriceHistory";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import ProductStats from "@/Components/ProductStats";
 
 dayjs.extend(relativeTime);
-
-const continenteLogo =
-    "https://www.continente.pt/on/demandware.static/-/Sites-global-navigation-catalog/default/dwacb0abd8/images/brand-logos/LogoCOL.svg";
-const garrafeiraSoaresLogo =
-    "https://www.valedolobo.com/upload/media/cache/a2c8a26c8eaf4c2ba830cee89a8f42fd_logos.png";
-const elCorteInglesLogo =
-    "https://www.elcorteingles.es/recursos/informacioncorporativa/doc/portal/2017/07/06/eci-letras.png";
-
-function getStoreImg(store) {
-    if (store === "Continente") return continenteLogo;
-    if (store === "Garrafeira Soares") return garrafeiraSoaresLogo;
-    if (store === "El Corte Inglés") return elCorteInglesLogo;
-}
 
 const lastWeek = [
     dayjs().subtract(6, "day"),
@@ -57,32 +45,25 @@ function getPriceInDate(records, storeName) {
 }
 
 function fillData(data) {
-    console.log({ data });
+    // console.log({ data });
 
     const realdata = {
         continente: getPriceInDate(data, "Continente"),
         soares: getPriceInDate(data, "Garrafeira Soares"),
         elcorte: getPriceInDate(data, "El Corte Ingles"),
     };
-    console.log({ realdata });
+    // console.log({ realdata });
 
     return realdata;
 }
 
-export default function Edit({ auth, product, history }) {
-    const [tabValue, setTabValue] = useState(0);
+export default function Edit({ auth, product, today, yesterday, history }) {
     const [currentTab, setCurrentTab] = useState(0);
 
-    console.log({ product, history });
+    // In case the Scrapper hasn't ran yet, make today's results equal to yesterday's
+    if (!today?.length) today = yesterday;
 
-    const uniqueOffers = product.product_entries.filter(
-        (value, index, self) => {
-            return (
-                self.findIndex((v) => v.store_name === value.store_name) ===
-                index
-            );
-        }
-    );
+    // console.log({ product, yesterday, today, history });
 
     const realdata = fillData(history?.product_entries);
 
@@ -112,35 +93,42 @@ export default function Edit({ auth, product, history }) {
                         </svg>
                         Back
                     </SecondaryButton>
-                    <div className="flex mb-6">
-                        <img className="max-h-32" src={product.img} />
-                        <div>
-                            <h2 className="mb-4 font-semibold text-xl text-gray-800 leading-tight">
-                                {product.name}
-                            </h2>
+                    <div className="flex justify-between">
+                        <div className="flex mb-6">
+                            <img className="max-h-32" src={product.img} />
+                            <div>
+                                <h2 className="mb-4 font-semibold text-xl text-gray-800 leading-tight">
+                                    {product.name}
+                                </h2>
 
-                            <p className="text-sm">
-                                <strong>EAN:</strong> {product.id}
-                            </p>
-                            <p className="text-sm">
-                                <strong>Brand:</strong> {product.brand}
-                            </p>
-                            {product.sub_brand && (
-                                <p className="text-sm">
-                                    <strong>Alternative Name:</strong>{" "}
-                                    {product.sub_brand}
+                                <p className="text-sm mb-0.5">
+                                    <strong>EAN:</strong> {product.id}
                                 </p>
-                            )}
-                            <p className="text-sm">
-                                <strong>Capacity:</strong> {product.capacity}ml
-                            </p>
-                            {product.sub_brand && (
-                                <p className="text-sm">
-                                    <strong>Year:</strong>{" "}
-                                    {product.harvest_year}
+                                <p className="text-sm mb-0.5">
+                                    <strong>Brand:</strong> {product.brand}
                                 </p>
-                            )}
+                                {product.sub_brand && (
+                                    <p className="text-sm mb-0.5">
+                                        <strong>Alternative Name:</strong>{" "}
+                                        {product.sub_brand}
+                                    </p>
+                                )}
+                                <p className="text-sm mb-0.5">
+                                    <strong>Capacity:</strong>{" "}
+                                    {product.capacity}ml
+                                </p>
+                                {product.sub_brand && (
+                                    <p className="text-sm mb-0.5">
+                                        <strong>Year:</strong>{" "}
+                                        {product.harvest_year}
+                                    </p>
+                                )}
+                            </div>
                         </div>
+                        <ProductStats
+                            todaysPrices={today}
+                            yesterdaysPrices={yesterday}
+                        />
                     </div>
                     <div
                         style={{ marginBottom: -24 }}
@@ -162,7 +150,6 @@ export default function Edit({ auth, product, history }) {
                 </>
             }
         >
-            {console.log({ product })}
             <Head title={product.name} />
 
             <div className="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -171,48 +158,46 @@ export default function Edit({ auth, product, history }) {
                         <h3 className="text-xl mb-4 font-medium text-gray-900">
                             Offers
                         </h3>
-                        {product.product_entries?.map((entry) => (
-                            <>
-                                <div
-                                    key={entry.id}
-                                    className="flex items-center p-4 mb-3 sm:p-8 bg-white shadow sm:rounded-lg"
-                                >
-                                    <img
-                                        src={entry?.store?.logo_url}
-                                        alt={entry.store_name}
-                                        className="w-32 h-10 mr-6 object-contain"
-                                    />
-                                    <h3 className="text-lg font-medium mr-auto text-gray-900">
-                                        {entry.product_name}
-                                    </h3>
+                        {today?.map((entry) => (
+                            <div
+                                key={entry.id}
+                                className="flex items-center p-4 mb-3 sm:p-8 bg-white shadow sm:rounded-lg"
+                            >
+                                <img
+                                    src={entry?.store?.logo_url}
+                                    alt={entry.store_name}
+                                    className="w-32 h-10 mr-6 object-contain"
+                                />
+                                <h3 className="text-lg font-medium mr-auto text-gray-900">
+                                    {entry.product_name}
+                                </h3>
 
-                                    {Boolean(entry.discount) && (
-                                        <div class="mr-4 center relative inline-block select-none whitespace-nowrap rounded-lg bg-red-500 py-1 px-3.5 align-baseline font-sans text-xs font-bold uppercase leading-none text-white">
-                                            <div class="mt-px">Sale</div>
-                                        </div>
-                                    )}
-
-                                    <div className="text-right">
-                                        <p className="text-2xl font-bold">
-                                            {entry.price.toFixed(2)}
-                                            {entry.currency}
-                                        </p>
-                                        <p className="text-xs">
-                                            {dayjs(entry.created_at).toNow()}
-                                        </p>
+                                {Boolean(entry.discount) && (
+                                    <div class="mr-4 center relative inline-block select-none whitespace-nowrap rounded-lg bg-red-500 py-1 px-3.5 align-baseline font-sans text-xs font-bold uppercase leading-none text-white">
+                                        <div class="mt-px">Sale</div>
                                     </div>
+                                )}
 
-                                    <a
-                                        href={entry.url}
-                                        target="_blank"
-                                        className="ml-4"
-                                    >
-                                        <SecondaryButton className="">
-                                            Visit Store
-                                        </SecondaryButton>
-                                    </a>
+                                <div className="text-right">
+                                    <p className="text-2xl font-bold">
+                                        {entry.price.toFixed(2)}
+                                        {entry.currency}
+                                    </p>
+                                    <p className="text-xs">
+                                        {dayjs(entry.created_at).toNow()}
+                                    </p>
                                 </div>
-                            </>
+
+                                <a
+                                    href={entry.url}
+                                    target="_blank"
+                                    className="ml-4"
+                                >
+                                    <SecondaryButton className="">
+                                        Visit Store
+                                    </SecondaryButton>
+                                </a>
+                            </div>
                         ))}
                     </>
                 )}
