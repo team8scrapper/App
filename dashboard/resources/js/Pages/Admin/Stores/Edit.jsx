@@ -9,6 +9,7 @@ import { useForm, Head, router } from "@inertiajs/react";
 import { IoIosAlert } from "react-icons/io";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 export default function Edit({ auth, store }) {
     const [testCount, setTestCount] = useState(0);
@@ -33,7 +34,13 @@ export default function Edit({ auth, store }) {
     const submit = (e) => {
         e.preventDefault();
         patch(route("admin.stores.update", store.id), {
-            onSuccess: () => reset(),
+            onSuccess: () => {
+                toast.success("Store updated successfully.");
+                reset();
+            },
+            onError: () => {
+                toast.error("Error updating the store!");
+            },
         });
     };
 

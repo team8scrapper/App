@@ -9,6 +9,7 @@ import { useForm, Head, router } from "@inertiajs/react";
 import { IoIosAlert } from "react-icons/io";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 export default function Create({ auth }) {
     const [testCount, setTestCount] = useState(0);
@@ -32,7 +33,15 @@ export default function Create({ auth }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route("admin.stores.store"), { onSuccess: () => reset() });
+        post(route("admin.stores.store"), {
+            onSuccess: () => {
+                toast.success("Store added successfully.");
+                reset();
+            },
+            onError: () => {
+                toast.error("Error adding a store!");
+            },
+        });
     };
 
     return (

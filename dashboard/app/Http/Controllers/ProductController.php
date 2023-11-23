@@ -49,7 +49,7 @@ class ProductController extends Controller
                 'name' => 'required|string|max:255',
                 'capacity' => 'integer|min:0',
                 'harvest_year' => 'integer|nullable',
-                'brand' => 'string|max:255|nullable',
+                'brand' => 'string|max:255',
                 'sub_brand' => 'string|max:255|nullable'
             ]);
 
@@ -104,7 +104,7 @@ class ProductController extends Controller
                 'region' => 'string|max:255',
                 'capacity' => 'integer|min:0',
                 'harvest_year' => 'integer|min:0|nullable',
-                'brand' => 'string|max:255|nullable',
+                'brand' => 'string|max:255',
                 'sub_brand' => 'string|max:255|nullable',
             ]);
     

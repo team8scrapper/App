@@ -41,7 +41,7 @@ Route::prefix('admin')->group(function() {
                 'store' => 'admin.products.store',
                 'destroy' => 'admin.products.destroy',
             ]);
-            Route::resource('/stores', StoreController::class)
+    Route::resource('/stores', StoreController::class)
             ->only(['index', 'create', 'show', 'edit', 'update', 'store', 'destroy'])
             ->middleware(['auth', 'verified'])->names([
                 'index' => 'admin.stores.index',

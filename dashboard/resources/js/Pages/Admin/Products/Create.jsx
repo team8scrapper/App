@@ -6,6 +6,7 @@ import TextInput from "@/Components/TextInput";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import { useForm, Head, router } from "@inertiajs/react";
+import { toast } from "react-toastify";
 
 export default function Create({ auth }) {
     const { data, setData, post, processing, reset, errors } = useForm({
@@ -20,7 +21,15 @@ export default function Create({ auth }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route("products.store"), { onSuccess: () => reset() });
+        post(route("admin.products.store"), {
+            onSuccess: () => {
+                toast.success("Product added successfully.");
+                reset();
+            },
+            onError: () => {
+                toast.error("Error adding a product!");
+            },
+        });
     };
 
     return (
