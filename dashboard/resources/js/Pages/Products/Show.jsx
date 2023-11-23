@@ -15,13 +15,13 @@ import ProductStats from "@/Components/ProductStats";
 dayjs.extend(relativeTime);
 
 const lastWeek = [
-    dayjs().subtract(6, "day"),
-    dayjs().subtract(5, "day"),
-    dayjs().subtract(4, "day"),
-    dayjs().subtract(3, "day"),
-    dayjs().subtract(2, "day"),
-    dayjs().subtract(1, "day"),
     dayjs().subtract(0, "day"),
+    dayjs().subtract(1, "day"),
+    dayjs().subtract(2, "day"),
+    dayjs().subtract(3, "day"),
+    dayjs().subtract(4, "day"),
+    dayjs().subtract(5, "day"),
+    dayjs().subtract(6, "day"),
 ];
 
 function getPriceInDate(records, storeName) {
