@@ -6,6 +6,7 @@ import TextInput from "@/Components/TextInput";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import { useForm, Head, router } from "@inertiajs/react";
+import { toast } from "react-toastify";
 
 export default function Edit({ auth, product }) {
     const { data, setData, patch, processing, reset, errors } = useForm({
@@ -20,8 +21,14 @@ export default function Edit({ auth, product }) {
 
     const submit = (e) => {
         e.preventDefault();
-        patch(route("products.update", product.id), {
-            onSuccess: () => reset(),
+        patch(route("admin.products.update", product.id), {
+            onSuccess: () => {
+                toast.success("Product updated successfully.");
+                reset();
+            },
+            onError: () => {
+                toast.error("Error updating the product!");
+            },
         });
     };
 

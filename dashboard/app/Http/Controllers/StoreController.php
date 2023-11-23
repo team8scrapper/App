@@ -82,7 +82,20 @@ class StoreController extends Controller
      */
     public function update(Request $request, Store $store)
     {
-        //
+        if ($request->user()->hasRole('admin')) {
+
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'search_url' => 'required|string',
+                'logo_url' => 'string|nullable',
+            ]);
+
+            $store->update($validated);
+    
+            return redirect('/admin/stores');
+        }
+        
+        return redirect()->back();
     }
 
     /**
