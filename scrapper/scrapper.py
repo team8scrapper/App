@@ -21,21 +21,32 @@ def	scrapper(ean, url):
 		if "@type" in item.keys() and item["@type"] == 'ItemList':
 			url = item["itemListElement"][0]["url"]
 			break
-	return url
 	# Search for the product content within the url found	
+	if not url:
+		return None
 	response = requests.get(url)
+	if not response:
+		return None
 	soup = BeautifulSoup(response.text, "html.parser")
-	script_tag = soup.find("script", {"type": "application/ld+json"})
-
+	script_tag = soup.find_all("script", {"type": "application/ld+json"})
+	arr = list(map(lambda x: json.loads(x.string), script_tag))
+	product_data = None
+	for item in arr:
+		if "@type" in item.keys() and item["@type"] == 'Product':
+			product_data = item
+			break
+	if not product_data:
+		return None
 	product = {}
-	if script_tag: # Read data into dictionary
-		product_data = json.loads(script_tag.string)
-		product["name"] = product_data["name"]
-		product["description"] = product_data["description"]
-		product["brand"] = product_data["brand"]["name"]
-		product["price"] = product_data["offers"]["price"]
-		product["currency"] = product_data["offers"]["priceCurrency"]
-	
+	try:
+		if script_tag: # Read data into dictionary
+			product["name"] = product_data["name"]
+			product["description"] = product_data["description"]
+			product["brand"] = product_data["brand"]["name"]
+			product["price"] = product_data["offers"]["price"]
+			product["currency"] = product_data["offers"]["priceCurrency"]
+	except:
+		return None
 	# Print dictionary for debug purposes
 	print(product) 
 	return product
