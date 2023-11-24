@@ -13,7 +13,7 @@ url = "https://www.continente.pt/bebidas-e-garrafeira/vinhos/?start=0&srule=FOOD
 
 for i in range(1, 3):
 
-	r = request.get(url)
+	r = requests.get(url)
 	soup = BeautifulSoup(r.text, "lxml")
 
 	block = soup.find_all("div", class_ = "col-12 col-sm-3 col-lg-2 productTile")
@@ -43,7 +43,7 @@ for i in block:
 		discount = "n/a"
 	else:
 		discount = discount_final.text
-	discount_list.append(descount.strip("\n \t\r\v"))
+	discount_list.append(discount.strip("\n \t\r\v"))
 
 df = pd.DataFrame({"Product Name":product_name, "Price": price_list, "Quantity": quantity_list, "Discount": discount_list})
 print(df)
