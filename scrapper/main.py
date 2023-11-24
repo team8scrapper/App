@@ -6,7 +6,8 @@ urls = {
 	"gsoares" : "https://www.garrafeirasoares.pt/pt/resultado-da-pesquisa_36.html?term=",
 	"elcorteingles" : "https://www.elcorteingles.pt/supermercado/pesquisar/?term=",
 	"portugalvineyards" : "https://www.portugalvineyards.com/pt/search?s=",
-	"garrafinhas" : "https://garrafinhas.pt/?s="
+	"garrafinhas" : "https://garrafinhas.pt/?s=",
+	"delhaize" : "https://www.delhaize.be/shop/search?q=",
 }
 
 # 5601012002515
@@ -17,14 +18,15 @@ def	main():
 	#print(product)
 	#product = auchan.scrapper(ean, urls["auchan"])
 	#print(product)
-	product = gsoares.scrapper(ean, urls["gsoares"])
+	""" product = gsoares.scrapper(ean, urls["gsoares"])
 	print(product)
 	product = elcorteingles.scrapper(ean, urls["elcorteingles"])
 	print(product)
 	product = ptvineyards.scrapper(ean, urls["portugalvineyards"])
-	print(product)
+	print(product) """
 	#product = garrafinhas.scrapper("5601012004427", urls["garrafinhas"])
-	#print(product)
+	product = delhaize.scrapper("5601012004427", urls["delhaize"])
+	print(product)
 
 if __name__ == "__main__":
     main()
