@@ -15,10 +15,10 @@ function getAveragePrice(entries) {
 }
 
 function buildClasses(percent) {
-    if (percent == 0) return "bg-gray-400 text-white text-xs rounded-full px-2";
+    if (percent > 0) return "bg-red-600 text-white text-xs rounded-full px-2";
     else if (percent < 0)
         return "bg-green-600 text-white text-xs rounded-full px-2";
-    return "bg-red-600 text-white text-xs rounded-full px-2";
+    return "bg-gray-400 text-white text-xs rounded-full px-2";
 }
 
 function renderTrending(newPrice, oldPrice) {
@@ -33,7 +33,10 @@ function renderTrending(newPrice, oldPrice) {
     return (
         <span className={buildClasses(percentageChange)}>
             {percentageChange > 0 && "+"}
-            {percentageChange}%
+            {typeof percentageChange === "number"
+                ? percentageChange
+                : (0.0).toFixed(1)}
+            %
         </span>
     );
 
