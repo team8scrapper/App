@@ -1,11 +1,13 @@
 from scrappers import continente, auchan, gsoares, elcorteingles, ptvineyards, garrafinhas
 from sqlalchemy import create_engine, text
-import datetime
-from logger import logger, log
+from utils.logger import logger, log
+from utils.time import get_current_timestamp
+from database import db
 
-connection_string = "mysql+mysqlconnector://sogrape:hackaton42sogrape@10.18.207.213:3306/sogrape"
+connection_string = "mysql+mysqlconnector://sogrape:hackaton42sogrape@127.0.0.1:3306/sogrape"
 engine = create_engine(connection_string, echo=True)
 
+# TODO marked to delete
 # urls = {
 # 	"Continente" : "https://www.continente.pt/pesquisa/?q=",
 # 	"auchan" : "https://www.auchan.pt/pt/pesquisa?q=",
@@ -15,63 +17,52 @@ engine = create_engine(connection_string, echo=True)
 # 	"garrafinhas" : "https://garrafinhas.pt/?s="
 # }
 
-scrapperDict = {
+
+# ----------------------- Dict with scrapper functions ----------------------- #
+scrapper_dict = {
     1: continente.scrapper,
     2: elcorteingles.scrapper,
 	3: gsoares.scrapper,
 }
 
 def	main():
+
 	with engine.connect() as connection:
 		products = connection.execute(text("SELECT * FROM products"))
 		stores = connection.execute(text("SELECT * FROM stores"))
 
-	# Get the current timestamp
-	timestamp = datetime.datetime.now()
-	# Format the timestamp as a string in the MySQL-compatible format
-	mysql_timestamp = timestamp.strftime('%Y-%m-%d %H:%M:%S')
-	
 	stores = list(stores.mappings())
 
 	for product in products.mappings():
-		# Current Product
 		print("\nEAN:", product["id"],"Product:" , product["name"], "Brand:", product["brand"])
 		for store in stores:
-			print("enter store " + store['name'])
-			# reset current
-			current = None
+			# reset entry
+			entry = None
 
-			if scrapperDict.get(store['id']) == None:  
+			# Make sure the scrapper is in the scprapper_dict
+			if scrapper_dict.get(store['id']) == None:  
 				logger(log.CRITICAL, f"Store ID {store['id']} {store['name']} has no scrapper in the dictionary!") 
 				continue
 			
+			# Use the store scrapper, if exception is thrown, continue to the next store
 			try:
-				current = scrapperDict[store['id']](product["id"], store["search_url"])
+				entry = scrapper_dict[store['id']](product["id"], store["search_url"])
 			except:
 				logger(log.ERROR , f"Scrapper {store['name']} for product {product['name']} and EAN {product['id']} failed!")
 				continue
 
-			# if store["id"] == 1:
-			# 	current = continente.scrapper(product["id"], store["search_url"])
-			# elif store["id"] == 2: 
-			# 	current = elcorteingles.scrapper(product["id"], store["search_url"])
-			# elif store["id"] == 3:
-			# 	current = gsoares.scrapper(product["id"], store["search_url"])
-
-			if not current:
+			if not entry:
 				logger(log.INFO, f"{product['id']} was not found in {store['name']}")
 				continue	
 
-			current["created_at"] = mysql_timestamp
-			current["updated_at"] = mysql_timestamp
-			current["ean"] = product["id"]
-			current["store_id"] = store["id"]
-			
-			sql = text("INSERT INTO product_entries (created_at, updated_at, price, url, product_id, store_id, product_name, currency) VALUES (:created_at, :updated_at, :price, :url, :ean, :store_id, :name, :currency)")
-			with engine.connect() as connection:
-				connection.execute(sql, current)
-				connection.commit()
+			# update the rest of the columns
+			entry["created_at"] = get_current_timestamp()
+			entry["updated_at"] = get_current_timestamp()
+			entry["ean"] = product["id"]
+			entry["store_id"] = store["id"]
 
+			db.insert_entry(entry)
+			
 		logger(log.INFO, f"{product['id']} {product['name']} finished scrapping!")
 
 

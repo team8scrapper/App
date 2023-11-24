@@ -185,7 +185,7 @@ export default function Edit({ auth, product, today, yesterday, history }) {
                                         {entry.currency == "EUR" ? "€" : "€"}
                                     </p>
                                     <p className="text-xs">
-                                        {dayjs(entry.created_at).toNow()}
+                                        {dayjs(entry.updated_at).fromNow()}
                                     </p>
                                 </div>
 
