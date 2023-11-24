@@ -1,4 +1,4 @@
-from scrappers import continente, auchan, gsoares, elcorteingles, ptvineyards, garrafinhas
+from scrappers import continente, auchan, gsoares, elcorteingles, ptvineyards, garrafinhas, delhaize
 
 urls = {
 	"continente" : "https://www.continente.pt/pesquisa/?q=",
@@ -26,7 +26,7 @@ def	main():
 	print(product) """
 	#product = garrafinhas.scrapper("5601012004427", urls["garrafinhas"])
 	product = delhaize.scrapper("5601012004427", urls["delhaize"])
-	print(product)
+	#print(product)
 
 if __name__ == "__main__":
     main()
