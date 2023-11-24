@@ -14,7 +14,7 @@ urls = {
 
 def	main():
 	ean = "5601012002515"
-	#product = continente.scrapper(ean, urls["continente"])
+	product = continente.scrapper(ean, urls["continente"])
 	#print(product)
 	#product = auchan.scrapper(ean, urls["auchan"])
 	#print(product)
@@ -25,7 +25,7 @@ def	main():
 	product = ptvineyards.scrapper(ean, urls["portugalvineyards"])
 	print(product) """
 	#product = garrafinhas.scrapper("5601012004427", urls["garrafinhas"])
-	product = delhaize.scrapper("5601012004427", urls["delhaize"])
+	#product = delhaize.scrapper("5601012004427", urls["delhaize"])
 	print(product)
 
 if __name__ == "__main__":
