@@ -12,24 +12,24 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toast } from "react-toastify";
 
 export default function Edit({ auth, store }) {
-    const [testCount, setTestCount] = useState(0);
-    const [validStore, setValidStore] = useState(false);
-    const [loading, setLoading] = useState(false);
+    // const [testCount, setTestCount] = useState(0);
+    // const [validStore, setValidStore] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const { data, setData, patch, processing, reset, errors } = useForm({
         name: store.name,
         search_url: store.search_url,
         logo_url: store.logo_url,
     });
 
-    const testStore = () => {
-        console.log("test store");
-        setLoading(true);
-        setTimeout(() => {
-            setValidStore(Boolean(Math.floor(Math.random() * 2))); // simulate 50% chance
-            setLoading(false);
-            setTestCount((prev) => prev + 1);
-        }, 1000);
-    };
+    // const testStore = () => {
+    //     console.log("test store");
+    //     setLoading(true);
+    //     setTimeout(() => {
+    //         setValidStore(Boolean(Math.floor(Math.random() * 2))); // simulate 50% chance
+    //         setLoading(false);
+    //         setTestCount((prev) => prev + 1);
+    //     }, 1000);
+    // };
 
     const submit = (e) => {
         e.preventDefault();
@@ -151,7 +151,7 @@ export default function Edit({ auth, store }) {
                             />
                         </div>
 
-                        <div>
+                        {/* <div>
                             <PrimaryButton
                                 type="button"
                                 className="mt-4 mr-2"
@@ -178,7 +178,7 @@ export default function Edit({ auth, store }) {
                                     )}
                                 </>
                             )}
-                        </div>
+                        </div> */}
 
                         <div className="flex justify-end">
                             <SecondaryButton
@@ -190,7 +190,7 @@ export default function Edit({ auth, store }) {
                             </SecondaryButton>
                             <PrimaryButton
                                 className="mt-4"
-                                disabled={!validStore || processing}
+                                disabled={processing}
                             >
                                 Update Store
                             </PrimaryButton>

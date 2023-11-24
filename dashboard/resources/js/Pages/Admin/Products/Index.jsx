@@ -16,7 +16,7 @@ export default function Index({ auth, products, admin }) {
                         Administration
                     </h2>
 
-                    <AdminNavigation />
+                    <AdminNavigation user={auth.user} />
                 </div>
             }
         >

@@ -35,6 +35,7 @@ def	scrapper(ean, url):
 		product["brand"] = soup.find("meta", {"itemprop": "brand"}).get("content")
 		product["price"] = soup.find("meta", {"itemprop": "price"}).get("content")
 		product["currency"] = soup.find("meta", {"itemprop": "priceCurrency"}).get("content")
+		product["url"] = url
 	except:
 		return None
 	return product
