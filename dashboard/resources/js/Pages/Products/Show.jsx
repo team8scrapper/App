@@ -181,7 +181,8 @@ export default function Edit({ auth, product, today, yesterday, history }) {
                                 <div className="text-right">
                                     <p className="text-2xl font-bold">
                                         {entry.price.toFixed(2)}
-                                        {entry.currency}
+
+                                        {entry.currency == "EUR" ? "€" : "€"}
                                     </p>
                                     <p className="text-xs">
                                         {dayjs(entry.created_at).toNow()}

@@ -12,30 +12,35 @@ def	scrapper(ean, url):
 	response = requests.get(url, headers=headers)
 	if not response:
 		return None
+	
 	soup = BeautifulSoup(response.text, "html.parser")
 	if not soup:
 		return None
 
 	soup = soup.find("script")
+	# ex <script>location='https://www.garrafeirasoares.pt/pt/portugal/vinhos/espumante-casal-garcia-rose-75-cl/item_1149.html?id=36&cat=0&pc=1'</script>
+	
 	url = None
 	if soup:
 		url = soup.string.split("\'")[1]
+		
 	# Search for the product content within the url found	
 	if not url:
 		return None
+	
 	response = requests.get(url, headers=headers)
 	if not response:
 		return None
 
-	product = {}
 	soup = BeautifulSoup(response.text, "html.parser")
-	try:
-		product["name"] = soup.find("meta", {"property": "og:title"}).get("content")
-		product["description"] = soup.find("meta", {"property": "og:description"}).get("content")
-		product["brand"] = soup.find("meta", {"itemprop": "brand"}).get("content")
-		product["price"] = soup.find("meta", {"itemprop": "price"}).get("content")
-		product["currency"] = soup.find("meta", {"itemprop": "priceCurrency"}).get("content")
-		product["url"] = url
-	except:
-		return None
+
+	product = {}
+	product["name"] = soup.find("meta", {"property": "og:title"}).get("content")
+	product["description"] = soup.find("meta", {"property": "og:description"}).get("content")
+	product["brand"] = soup.find("meta", {"itemprop": "brand"}).get("content")
+	product["price"] = soup.find("meta", {"itemprop": "price"}).get("content")
+	product["currency"] = soup.find("meta", {"itemprop": "priceCurrency"}).get("content")
+	product["url"] = url
+
+	print("product found")
 	return product
