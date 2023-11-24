@@ -45,6 +45,7 @@ def	scrapper(ean, url):
 		product["brand"] = product_data["brand"]
 		product["price"] = product_data["offers"]["price"]
 		product["currency"] = product_data["offers"]["priceCurrency"]
+		product["url"] = url
 	except:
 		return None
 	return product
