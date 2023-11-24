@@ -26,7 +26,7 @@ def	main():
 	print(product) """
 	#product = garrafinhas.scrapper("5601012004427", urls["garrafinhas"])
 	product = delhaize.scrapper("5601012004427", urls["delhaize"])
-	#print(product)
+	print(product)
 
 if __name__ == "__main__":
     main()
