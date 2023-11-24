@@ -28,3 +28,9 @@ def	scrapper(ean, url):
 			"currency" : product_price.text.strip()[0]
 			}
 	return value
+
+def test():
+    scrapper("5601012001310", "https://www.delhaize.be/shop/search?q=")
+
+
+test()
