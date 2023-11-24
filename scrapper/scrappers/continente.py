@@ -22,6 +22,8 @@ def	scrapper(ean, url):
 	url = None
 	for item in arr:
 		if "@type" in item.keys() and item["@type"] == 'ItemList':
+			if not len(item["itemListElement"]):
+				return None
 			url = item["itemListElement"][0]["url"]
 			break
 
