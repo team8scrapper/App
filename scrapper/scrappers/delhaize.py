@@ -7,47 +7,24 @@ headers = {
  }
 
 def	scrapper(ean, url):
-	# Search for the product's ean in the url
-	url = url + ean
-	response = requests.get(url, headers=headers)
-	if not response:
+	response = requests.get(url + ean, headers=headers)
+	
+	soup = BeautifulSoup(response.text, 'html.parser')
+	product_div = soup.find('div', class_='product')
+	if product_div is None:
+		print("Product not found")
 		return None
-	soup = BeautifulSoup(response.text, "html.parser")
-	if not soup:
+	product_name = product_div.find('a', class_='pwc-tile--description col-tile--description')
+	product_price = product_div.find('span', class_='ct-price-formatted') 
+	product_discount = product_div.find("span", class_="ct-product-tile-badge-value--pvpr col-product-tile-badge-value--pvpr")
+	print(product_discount.strip())
+	if product_name is None or product_price is None:
+		print("Product not found")
 		return None
-
-	# Find the product URL from the search
-	script_tag = soup.find_all("script", {"type": "application/ld+json"})
-	arr = list(map(lambda x: json.loads(x.string), script_tag))
-	url = None
-	for item in arr:
-		if "@type" in item.keys() and item["@type"] == 'ItemList':
-			url = item["itemListElement"][0]["url"]
-			break
-
-	# Search for the product content within the url found	
-	if not url:
-		return None
-	response = requests.get(url, headers=headers)
-	if not response:
-		return None
-	soup = BeautifulSoup(response.text, "html.parser")
-	script_tag = soup.find_all("script", {"type": "application/ld+json"})
-	arr = list(map(lambda x: json.loads(x.string), script_tag))
-	product_data = None
-	for item in arr:
-		if "@type" in item.keys() and item["@type"] == 'Product':
-			product_data = item
-			break
-	if not product_data:
-		return None
-	product = {}
-	try:
-		product["name"] = product_data["name"]
-		product["description"] = product_data["description"]
-		product["brand"] = product_data["brand"]["name"]
-		product["price"] = product_data["offers"]["price"]
-		product["currency"] = product_data["offers"]["priceCurrency"]
-	except:
-		return None
-	return product
+	value = {
+			"name" : product_name.text.strip(),
+			"price" : float(product_price.text.strip()[1:].replace(',','.')),
+			"url" : (url + ean),
+			"currency" : product_price.text.strip()[0]
+			}
+	return value
