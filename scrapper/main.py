@@ -28,11 +28,11 @@ def	main():
 		# Current Product
 		print("\nEAN:", product["id"],"Product:" , product["name"], "Brand:", product["brand"])
 		for store in stores.mappings():
-			if store["id"] == 1
+			if store["id"] == 1:
 				current = continente.scrapper(product["id"], store["search_url"])
-			elif store["id"] == 2 
+			elif store["id"] == 2: 
 				current = elcorteingles.scrapper(product["id"], store["search_url"])
-			elif store["id"] == 3 
+			elif store["id"] == 3:
 				current = gsoares.scrapper(product["id"], store["search_url"])
 			if not current:
 				continue	
@@ -41,6 +41,9 @@ def	main():
 			current["ean"] = product["id"]
 			current["store_id"] = store["id"]
 			sql = text("INSERT INTO product_entries (created_at, updated_at, price, url, product_id, store_id, product_name, currency) VALUES (:created_at, :updated_at, :price, :url, :ean, :store_id, :name, :currency)")
+			with engine.connect() as connection:
+		                connection.execute(sql, current)
+                		connection.commit()
 
 
 if __name__ == "__main__":
