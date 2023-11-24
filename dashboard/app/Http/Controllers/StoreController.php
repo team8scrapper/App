@@ -14,7 +14,7 @@ class StoreController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->user()->hasRole('admin')) {
+        if ($request->user()->hasRole('root')) {
             return Inertia::render('Admin/Stores/Index', [
                 'stores' => Store::all(),
                 'admin' => true,
@@ -28,7 +28,7 @@ class StoreController extends Controller
      */
     public function create(Request $request)
     {
-        if ($request->user()->hasRole('admin')) {
+        if ($request->user()->hasRole('root')) {
             return Inertia::render('Admin/Stores/Create');
         }
         return redirect()->back();
@@ -39,11 +39,11 @@ class StoreController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->user()->hasRole('admin')) {
+        if ($request->user()->hasRole('root')) {
 
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
-                'search_url' => 'required|string',
+                'slug' => 'required|string', // TODO make unique
                 'logo_url' => 'string|nullable',
             ]);
 
@@ -68,7 +68,7 @@ class StoreController extends Controller
      */
     public function edit(Request $request, Store $store)
     {
-        if ($request->user()->hasRole('admin')) {
+        if ($request->user()->hasRole('root')) {
             return Inertia::render('Admin/Stores/Edit', [
                 'store' => $store,
             ]);
@@ -82,11 +82,11 @@ class StoreController extends Controller
      */
     public function update(Request $request, Store $store)
     {
-        if ($request->user()->hasRole('admin')) {
+        if ($request->user()->hasRole('root')) {
 
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
-                'search_url' => 'required|string',
+                'slug' => 'required|string', // TODO make unique
                 'logo_url' => 'string|nullable',
             ]);
 
@@ -103,7 +103,7 @@ class StoreController extends Controller
      */
     public function destroy(Request $request, Store $store)
     {
-        if ($request->user()->hasRole('admin')) {
+        if ($request->user()->hasRole('root')) {
             $store->delete();
 
             return redirect(route('admin.stores.index'));
