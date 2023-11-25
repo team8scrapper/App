@@ -22,6 +22,8 @@ def	scrapper(ean, url):
 	url = None
 	for item in arr:
 		if "@type" in item.keys() and item["@type"] == 'ItemList':
+			if not len(item["itemListElement"]):
+				return None
 			url = item["itemListElement"][0]["url"]
 			break
 
@@ -48,6 +50,7 @@ def	scrapper(ean, url):
 		product["brand"] = product_data["brand"]["name"]
 		product["price"] = product_data["offers"]["price"]
 		product["currency"] = product_data["offers"]["priceCurrency"]
+		product["url"] = url
 	except:
 		return None
 	return product

@@ -43,7 +43,7 @@ class StoreController extends Controller
 
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
-                'slug' => 'required|string', // TODO make unique
+                'search_url' => 'required|string',
                 'logo_url' => 'string|nullable',
             ]);
 
@@ -86,7 +86,7 @@ class StoreController extends Controller
 
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
-                'slug' => 'required|string', // TODO make unique
+                'search_url' => 'required|string',
                 'logo_url' => 'string|nullable',
             ]);
 

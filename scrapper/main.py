@@ -23,6 +23,7 @@ scrapper_dict = {
     1: continente.scrapper,
     2: elcorteingles.scrapper,
 	3: gsoares.scrapper,
+	4: auchan.scrapper,
 }
 
 def	main():
