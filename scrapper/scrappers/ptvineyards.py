@@ -32,9 +32,15 @@ def	scrapper(ean, url):
 	try:
 		product["name"] = soup.find("meta", {"property": "og:title"}).get("content")
 		product["description"] = soup.find("meta", {"property": "og:description"}).get("content")
-		product["brand"] = ""
 		product["price"] = soup.find("meta", {"property": "product:price:amount"}).get("content")
 		product["currency"] = soup.find("meta", {"property": "product:price:currency"}).get("content")
+		product["url"] = url
 	except:
 		return None
 	return product
+
+
+# def test():
+#     scrapper("5601012001310", "https://www.portugalvineyards.com/pt/search?controller=search&s=")
+
+# test()
