@@ -24,6 +24,7 @@ scrapper_dict = {
     2: elcorteingles.scrapper,
 	3: gsoares.scrapper,
 	4: auchan.scrapper,
+	5: garrafinhas.scrapper,
 }
 
 def	main():

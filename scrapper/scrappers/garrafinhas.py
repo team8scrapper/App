@@ -1,6 +1,7 @@
 import requests
 import json
 from bs4 import BeautifulSoup
+from babel.numbers import parse_decimal
 
 headers = {
 'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0'
@@ -10,7 +11,7 @@ headers = {
 
 def	scrapper(ean, url):
 	# Search for the product's ean in the url
-	url = url + ean
+	url = url + ean + "&post_type=product"
 	response = requests.get(url, headers=headers)
 	if not response:
 		return None
@@ -20,34 +21,40 @@ def	scrapper(ean, url):
 
 	# Find the product URL from the search
 	url = None
-	soup = soup.find("main", {"id": "main"})
-	if soup:
-		url = soup.find("a").get("href")
-	# stopped here
-	return url
-	# Search for the product content within the url found	
+	search_links = soup.select(".shop-container .products .product .product-title a")
+	if len(search_links) == 0:
+		return None
+	
+	url = search_links[0].get("href")
 	if not url:
 		return None
+	
+	# Search for the product content within the url found
 	response = requests.get(url, headers=headers)
 	if not response:
 		return None
+
 	soup = BeautifulSoup(response.text, "html.parser")
-	script_tag = soup.find_all("script", {"type": "application/ld+json"})
-	arr = list(map(lambda x: json.loads(x.string), script_tag))
-	product_data = None
-	for item in arr:
-		if "@type" in item.keys() and item["@type"] == 'Product':
-			product_data = item
-			break
-	if not product_data:
+
+	info_el = soup.select(".product-main .product-info")
+	if len(info_el) == 0:
 		return None
+	
 	product = {}
 	try:
-		product["name"] = product_data["name"]
-		product["description"] = product_data["description"]
-		product["brand"] = product_data["brand"]["name"]
-		product["price"] = product_data["offers"]["price"]
-		product["currency"] = product_data["offers"]["priceCurrency"]
+		product["url"] = url
+		product["currency"] = "EUR" # store only supports EUR
+		product["name"] = info_el[0].select("h1.product-title.product_title")[0].text
+		price_raw = info_el[0].select(".price bdi")[0].text
+		product["price"] = parse_decimal(price_raw.strip("€"), locale='pt_PT')
 	except:
 		return None
+	
 	return product
+
+
+
+# def test():
+#     scrapper("5601012001310", "https://garrafinhas.pt/?s=")
+
+# test()
