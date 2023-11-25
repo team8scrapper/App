@@ -87,14 +87,14 @@ export default function ProductsGrid({
                     <AiOutlineLoading3Quarters className="animate-spin inline-block" />
                 )}
             </div>
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {products.map((product) => (
                     <Link
                         href={route("products.show", product.id)}
                         key={product.id}
-                        className="flex flex-col text-center items-center sm:p-8 bg-white shadow sm:rounded-lg"
+                        className="flex flex-col text-center items-center p-4 sm:p-8 bg-white shadow rounded-lg"
                     >
-                        <img className="max-h-42" src={product.img} />
+                        <img className="max-h-[200px]" src={product.img} />
                         <div>
                             <p className="text-md font-bold mt-6">
                                 {product.name}, {product.capacity}ml

@@ -80,7 +80,7 @@ export default function Create({ auth }) {
                     Back
                 </SecondaryButton>
 
-                <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div className="p-4 sm:p-8 bg-white shadow rounded-lg">
                     <header>
                         <h2 className="text-lg font-medium text-gray-900">
                             Register a new Store

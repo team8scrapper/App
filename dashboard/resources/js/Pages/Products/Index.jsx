@@ -20,7 +20,7 @@ export default function Index({ auth, products, admin, query, capacity }) {
             <Head title="Products" />
             {console.log({ admin, products })}
 
-            <div className="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
                 <ProductsGrid
                     products={products}
                     admin={admin}

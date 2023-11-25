@@ -152,7 +152,7 @@ export default function Edit({ auth, product, today, yesterday, history }) {
         >
             <Head title={product.name} />
 
-            <div className="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {currentTab == 0 && (
                     <>
                         <h3 className="text-xl mb-4 font-medium text-gray-900">
@@ -161,7 +161,7 @@ export default function Edit({ auth, product, today, yesterday, history }) {
                         {today?.map((entry) => (
                             <div
                                 key={entry.id}
-                                className="flex items-center p-4 mb-3 sm:p-8 bg-white shadow sm:rounded-lg"
+                                className="flex items-center p-4 mb-3 sm:p-8 bg-white shadow rounded-lg"
                             >
                                 <img
                                     src={entry?.store?.logo_url}

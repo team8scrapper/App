@@ -22,7 +22,7 @@ export default function Index({ auth, products, admin }) {
         >
             <Head title="Products" />
 
-            <div className="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
                 <div className="flex justify-between">
                     <h2 className="font-semibold text-2xl text-gray-800 leading-tight">
                         Products
