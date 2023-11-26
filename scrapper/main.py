@@ -1,4 +1,4 @@
-from scrappers import continente, auchan, gsoares, elcorteingles, ptvineyards, garrafinhas
+from scrappers import continente, auchan, gsoares, elcorteingles, ptvineyards, garrafinhas, coop
 from sqlalchemy import create_engine, text
 from utils.logger import logger, log
 from utils.time import get_current_timestamp
@@ -26,6 +26,7 @@ scrapper_dict = {
 	4: auchan.scrapper,
 	5: garrafinhas.scrapper,
 	6: ptvineyards.scrapper,
+	7: coop.scrapper,
 }
 
 def	main():
