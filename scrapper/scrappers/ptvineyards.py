@@ -17,9 +17,12 @@ def	scrapper(ean, url):
 		return None
 
 	url = None
-	soup = soup.find("div", {"class" : "products"})
-	if soup:
-		url = soup.find("a").get("href")
+	soup = soup.select("section#main div.products")
+
+	if not len(soup):
+		return None
+	
+	url = soup[0].find("a").get("href")
 	# Search for the product content within the url found	
 	if not url:
 		return None
@@ -37,10 +40,11 @@ def	scrapper(ean, url):
 		product["url"] = url
 	except:
 		return None
+	print(product)
 	return product
 
 
 # def test():
-#     scrapper("5601012001310", "https://www.portugalvineyards.com/pt/search?controller=search&s=")
+#     scrapper("56010120115", "https://www.portugalvineyards.com/pt/search?controller=search&s=")
 
 # test()
