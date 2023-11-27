@@ -11,7 +11,7 @@ function getAveragePrice(entries) {
     entries.forEach((item) => {
         sum += item.price;
     });
-    return (sum / entries.length).toFixed(2);
+    return +(sum / entries.length).toFixed(2);
 }
 
 function buildClasses(percent) {
@@ -24,7 +24,7 @@ function buildClasses(percent) {
 function renderTrending(newPrice, oldPrice) {
     // newPrice = 4.99;
     // oldPrice = 6.99;
-    let percentageChange = (((newPrice - oldPrice) / oldPrice) * 100).toFixed(
+    let percentageChange = +(((newPrice - oldPrice) / oldPrice) * 100).toFixed(
         1
     );
 
@@ -32,10 +32,10 @@ function renderTrending(newPrice, oldPrice) {
 
     return (
         <span className={buildClasses(percentageChange)}>
-            {percentageChange > 0 && "+"}
+            {percentageChange > 0.0 && "+"}
             {typeof percentageChange === "number"
                 ? percentageChange
-                : (0.0).toFixed(1)}
+                : +(0.0).toFixed(1)}
             %
         </span>
     );

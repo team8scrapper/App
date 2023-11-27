@@ -31,7 +31,7 @@ function getPriceInDate(records, storeName) {
         let item = records?.find((el) => {
             if (
                 el.store_name == storeName &&
-                dayjs(date).isSame(el.created_at, "day")
+                dayjs(date).isSame(el.updated_at, "day")
             )
                 return 1;
             return 0;
