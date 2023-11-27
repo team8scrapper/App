@@ -7,17 +7,6 @@ from database import db
 connection_string = "mysql+mysqlconnector://sogrape:hackaton42sogrape@127.0.0.1:3306/sogrape"
 engine = create_engine(connection_string, echo=True)
 
-# TODO marked to delete
-# urls = {
-# 	"Continente" : "https://www.continente.pt/pesquisa/?q=",
-# 	"auchan" : "https://www.auchan.pt/pt/pesquisa?q=",
-# 	"gsoares" : "https://www.garrafeirasoares.pt/pt/resultado-da-pesquisa_36.html?term=",
-# 	"El Corte Ingls" : "https://www.elcorteingles.pt/supermercado/pesquisar/?term=",
-# 	"portugalvineyards" : "https://www.portugalvineyards.com/pt/search?s=",
-# 	"garrafinhas" : "https://garrafinhas.pt/?s="
-# }
-
-
 # ----------------------- Dict with scrapper functions ----------------------- #
 scrapper_dict = {
     1: continente.scrapper,
