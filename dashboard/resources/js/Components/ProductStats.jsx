@@ -84,7 +84,7 @@ export default function ProductStats({
                         <p className="text-gray-600 text-sm">Average Price</p>
                         <div className="flex items-center">
                             <p className="text-2xl font-bold mr-2">
-                                {averagePrice}€
+                                {averagePrice.toFixed(2)}€
                             </p>
                             {renderTrending(
                                 averagePrice,
