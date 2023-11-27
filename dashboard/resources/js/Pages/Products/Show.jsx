@@ -158,48 +158,54 @@ export default function Edit({ auth, product, today, yesterday, history }) {
                         <h3 className="text-xl mb-4 font-medium text-gray-900">
                             Offers
                         </h3>
-                        {today?.map((entry) => (
-                            <div
-                                key={entry.id}
-                                className="flex items-center p-4 mb-3 sm:p-8 bg-white shadow rounded-lg"
-                            >
-                                <img
-                                    src={entry?.store?.logo_url}
-                                    alt={entry.store_name}
-                                    className="w-32 h-10 mr-6 object-contain"
-                                />
-                                <h3 className="text-lg font-medium mr-auto text-gray-900">
-                                    {entry.product_name}
-                                </h3>
-
-                                {Boolean(entry.discount) && (
-                                    <div class="mr-4 center relative inline-block select-none whitespace-nowrap rounded-lg bg-red-500 py-1 px-3.5 align-baseline font-sans text-xs font-bold uppercase leading-none text-white">
-                                        <div class="mt-px">Sale</div>
-                                    </div>
-                                )}
-
-                                <div className="text-right">
-                                    <p className="text-2xl font-bold">
-                                        {entry.price.toFixed(2)}
-
-                                        {entry.currency == "EUR" ? "€" : "€"}
-                                    </p>
-                                    <p className="text-xs">
-                                        {dayjs(entry.updated_at).fromNow()}
-                                    </p>
-                                </div>
-
-                                <a
-                                    href={entry.url}
-                                    target="_blank"
-                                    className="ml-4"
+                        {today.length ? (
+                            today?.map((entry) => (
+                                <div
+                                    key={entry.id}
+                                    className="flex items-center p-4 mb-3 sm:p-8 bg-white shadow rounded-lg"
                                 >
-                                    <SecondaryButton className="">
-                                        Visit Store
-                                    </SecondaryButton>
-                                </a>
-                            </div>
-                        ))}
+                                    <img
+                                        src={entry?.store?.logo_url}
+                                        alt={entry.store_name}
+                                        className="w-32 h-10 mr-6 object-contain"
+                                    />
+                                    <h3 className="text-lg font-medium mr-auto text-gray-900">
+                                        {entry.product_name}
+                                    </h3>
+
+                                    {Boolean(entry.discount) && (
+                                        <div class="mr-4 center relative inline-block select-none whitespace-nowrap rounded-lg bg-red-500 py-1 px-3.5 align-baseline font-sans text-xs font-bold uppercase leading-none text-white">
+                                            <div class="mt-px">Sale</div>
+                                        </div>
+                                    )}
+
+                                    <div className="text-right">
+                                        <p className="text-2xl font-bold">
+                                            {entry.price.toFixed(2)}
+
+                                            {entry.currency == "EUR"
+                                                ? "€"
+                                                : "€"}
+                                        </p>
+                                        <p className="text-xs">
+                                            {dayjs(entry.updated_at).fromNow()}
+                                        </p>
+                                    </div>
+
+                                    <a
+                                        href={entry.url}
+                                        target="_blank"
+                                        className="ml-4"
+                                    >
+                                        <SecondaryButton className="">
+                                            Visit Store
+                                        </SecondaryButton>
+                                    </a>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No offers at this moment.</p>
+                        )}
                     </>
                 )}
                 {currentTab == 1 && (
