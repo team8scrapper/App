@@ -67,6 +67,7 @@ class ProductPriceHistory extends React.Component {
     constructor(props) {
         super(props);
 
+        // console.log("chart", this.props);
         this.state = {
             series: [
                 {

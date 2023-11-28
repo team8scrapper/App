@@ -11,51 +11,52 @@ import ProductPriceHistory from "@/Components/ProductPriceHistory";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import ProductStats from "@/Components/ProductStats";
+import PriceHistoryDefault from "@/Components/Charts/PriceHistoryDefault";
 
-dayjs.extend(relativeTime);
+// dayjs.extend(relativeTime);
 
-const lastWeek = [
-    dayjs().subtract(0, "day"),
-    dayjs().subtract(1, "day"),
-    dayjs().subtract(2, "day"),
-    dayjs().subtract(3, "day"),
-    dayjs().subtract(4, "day"),
-    dayjs().subtract(5, "day"),
-    dayjs().subtract(6, "day"),
-];
+// const lastWeek = [
+//     dayjs().subtract(0, "day"),
+//     dayjs().subtract(1, "day"),
+//     dayjs().subtract(2, "day"),
+//     dayjs().subtract(3, "day"),
+//     dayjs().subtract(4, "day"),
+//     dayjs().subtract(5, "day"),
+//     dayjs().subtract(6, "day"),
+// ];
 
-function getPriceInDate(records, storeName) {
-    const res = [];
+// function getPriceInDate(records, storeName) {
+//     const res = [];
 
-    lastWeek.forEach((date) => {
-        let item = records?.find((el) => {
-            if (
-                el.store_name == storeName &&
-                dayjs(date).isSame(el.updated_at, "day")
-            )
-                return 1;
-            return 0;
-        });
+//     lastWeek.forEach((date) => {
+//         let item = records?.find((el) => {
+//             if (
+//                 el.store_name == storeName &&
+//                 dayjs(date).isSame(el.updated_at, "day")
+//             )
+//                 return 1;
+//             return 0;
+//         });
 
-        if (item) res.push(item.price);
-        else res.push(0);
-    });
+//         if (item) res.push(item.price);
+//         else res.push(0);
+//     });
 
-    return res;
-}
+//     return res;
+// }
 
-function fillData(data) {
-    // console.log({ data });
+// function fillData(data) {
+//     // console.log({ data });
 
-    const realdata = {
-        continente: getPriceInDate(data, "Continente"),
-        soares: getPriceInDate(data, "Garrafeira Soares"),
-        elcorte: getPriceInDate(data, "El Corte Ingles"),
-    };
-    // console.log({ realdata });
+//     const realdata = {
+//         continente: getPriceInDate(data, "Continente"),
+//         soares: getPriceInDate(data, "Garrafeira Soares"),
+//         elcorte: getPriceInDate(data, "El Corte Ingles"),
+//     };
+//     // console.log({ realdata });
 
-    return realdata;
-}
+//     return realdata;
+// }
 
 export default function Edit({ auth, product, today, yesterday, history }) {
     const [currentTab, setCurrentTab] = useState(0);
@@ -65,7 +66,7 @@ export default function Edit({ auth, product, today, yesterday, history }) {
 
     // console.log({ product, yesterday, today, history });
 
-    const realdata = fillData(history?.product_entries);
+    // const realdata = fillData(history?.product_entries);
 
     return (
         <AuthenticatedLayout
@@ -209,10 +210,11 @@ export default function Edit({ auth, product, today, yesterday, history }) {
                     </>
                 )}
                 {currentTab == 1 && (
-                    <ProductPriceHistory
-                        history={realdata}
-                        lastWeek={lastWeek}
-                    />
+                    <PriceHistoryDefault history={history} />
+                    // <ProductPriceHistory
+                    //     history={realdata}
+                    //     lastWeek={lastWeek}
+                    // />
                 )}
             </div>
         </AuthenticatedLayout>
