@@ -191,7 +191,7 @@ export default function Edit({ auth, product }) {
                             />
                         </div>
 
-                        <div>
+                        {/* <div>
                             <InputLabel
                                 htmlFor="harvest_year"
                                 value="Year (ml)"
@@ -213,7 +213,7 @@ export default function Edit({ auth, product }) {
                                 message={errors.capacity}
                                 className="mt-2"
                             />
-                        </div>
+                        </div> */}
 
                         <div className="flex justify-end">
                             {/* <SecondaryButton

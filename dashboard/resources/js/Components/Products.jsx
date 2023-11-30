@@ -26,9 +26,6 @@ export default function Products({ products, admin }) {
                             Capacity
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Year
-                        </th>
-                        <th scope="col" className="px-6 py-3">
                             Action
                         </th>
                     </tr>
@@ -47,9 +44,6 @@ export default function Products({ products, admin }) {
                             </td>
                             <td className="px-6 font-medium text-gray-900 py-4">
                                 {product.capacity}ml
-                            </td>
-                            <td className="px-6 py-4">
-                                {product.harvest_year}
                             </td>
                             <td className="px-6 py-4">
                                 <a
