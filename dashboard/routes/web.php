@@ -59,7 +59,8 @@ Route::resource('products', ProductPublic::class)
     ->middleware(['auth', 'verified']);
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return to_route('products.index');
+    // return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
