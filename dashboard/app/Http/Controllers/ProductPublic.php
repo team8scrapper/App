@@ -28,13 +28,37 @@ class ProductPublic extends Controller
         ]);
     }
 
-    public function show(Product $product)
+    public function show(Request $request, Product $product)
     {
+        $entries = ProductEntry::where('product_id', $product->id)->get();
+
+        $available_years = array();
+        foreach($entries as $entry)
+        {
+            if(!in_array($entry['year'], $available_years) && $entry['year'] != NULL)
+                $available_years[] = $entry['year'];
+        }
+        // dd($available_years);
+        
+        if ($request->has('year')) {
+            $year = $request['year'];
+            if ($year) {
+                return Inertia::render('Products/Show', [
+                    'product' => $product,
+                    'today' => ProductEntry::with('store')->where('year', $year)->where('product_id', $product->id)->whereDate('updated_at', Carbon::today())->orderBy('price', 'ASC')->get(),
+                    'yesterday' => ProductEntry::with('store')->where('year', $year)->where('product_id', $product->id)->whereDate('updated_at', Carbon::yesterday())->orderBy('price', 'ASC')->get(),
+                    'history' => ProductEntry::with('store')->where('year', $year)->where('product_id', $product->id)->get(),
+                    'years' => $available_years
+                ]);
+            }
+        }
+
         return Inertia::render('Products/Show', [
             'product' => $product,
             'today' => ProductEntry::with('store')->where('product_id', $product->id)->whereDate('updated_at', Carbon::today())->orderBy('price', 'ASC')->get(),
             'yesterday' => ProductEntry::with('store')->where('product_id', $product->id)->whereDate('updated_at', Carbon::yesterday())->orderBy('price', 'ASC')->get(),
             'history' => ProductEntry::with('store')->where('product_id', $product->id)->get(),
+            'years' => $available_years
         ]);
     }
 }

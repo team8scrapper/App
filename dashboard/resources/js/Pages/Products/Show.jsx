@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import ProductStats from "@/Components/ProductStats";
 import PriceHistoryDefault from "@/Components/Charts/PriceHistoryDefault";
+import YearsNavigation from "@/Components/YearsNavigation";
 
 // dayjs.extend(relativeTime);
 
@@ -58,7 +59,14 @@ import PriceHistoryDefault from "@/Components/Charts/PriceHistoryDefault";
 //     return realdata;
 // }
 
-export default function Edit({ auth, product, today, yesterday, history }) {
+export default function Edit({
+    auth,
+    product,
+    today,
+    yesterday,
+    history,
+    years,
+}) {
     const [currentTab, setCurrentTab] = useState(0);
 
     // In case the Scrapper hasn't ran yet, make today's results equal to yesterday's
@@ -131,6 +139,9 @@ export default function Edit({ auth, product, today, yesterday, history }) {
                             yesterdaysPrices={yesterday}
                         />
                     </div>
+                    <div className="ml-10 mb-6 mt-2">
+                        <YearsNavigation availableYears={years} />
+                    </div>
                     <div
                         style={{ marginBottom: -24 }}
                         className="space-x-8 sm:-my-px sm:ml-10 sm:flex"
@@ -139,7 +150,7 @@ export default function Edit({ auth, product, today, yesterday, history }) {
                             active={currentTab == 0}
                             onClick={() => setCurrentTab(0)}
                         >
-                            Stores
+                            Offers
                         </Tab>
                         <Tab
                             active={currentTab == 1}
