@@ -26,7 +26,7 @@ function groupPricesByDate(records) {
         );
         res[i] = entries ? entries : null;
     });
-    console.log("res", res);
+    // console.log("res", res);
     return res;
 }
 
@@ -54,7 +54,7 @@ function getAvgPrices(arr) {
         );
 
         if (sum == 0) return null;
-        console.log("sum for day", sum);
+        // console.log("sum for day", sum);
         return +(sum / day.length).toFixed(2);
     });
 }
@@ -74,7 +74,7 @@ function fillData(data) {
             data: getMaxPrices(data),
         },
     ];
-    console.log({ chartData });
+    // console.log({ chartData });
 
     return chartData;
 }
@@ -100,7 +100,7 @@ function PriceHistoryDefault({ history }) {
     const maximum = getMaxForTheWeek(chartData[2]?.data);
     const minimum = getMinForTheWeek(chartData[0]?.data);
 
-    console.log({ maximum, minimum });
+    console.log({ chartData, groupedEntries, maximum, minimum });
 
     return (
         <>
@@ -179,13 +179,13 @@ class DefaultChart extends React.Component {
                 },
                 xaxis: {
                     categories: [
-                        dayjs(this.props.lastWeek[6]).format("DD MMM"),
-                        dayjs(this.props.lastWeek[5]).format("DD MMM"),
-                        dayjs(this.props.lastWeek[4]).format("DD MMM"),
-                        dayjs(this.props.lastWeek[3]).format("DD MMM"),
-                        dayjs(this.props.lastWeek[2]).format("DD MMM"),
-                        dayjs(this.props.lastWeek[1]).format("DD MMM"),
                         dayjs(this.props.lastWeek[0]).format("DD MMM"),
+                        dayjs(this.props.lastWeek[1]).format("DD MMM"),
+                        dayjs(this.props.lastWeek[2]).format("DD MMM"),
+                        dayjs(this.props.lastWeek[3]).format("DD MMM"),
+                        dayjs(this.props.lastWeek[4]).format("DD MMM"),
+                        dayjs(this.props.lastWeek[5]).format("DD MMM"),
+                        dayjs(this.props.lastWeek[6]).format("DD MMM"),
                     ],
                 },
                 plotOptions: {
