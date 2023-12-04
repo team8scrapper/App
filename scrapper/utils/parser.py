@@ -18,3 +18,13 @@ def invalid_json(s):
             closg = s.find(r'"', unesc + 2)
             s = s[:closg] + r'\"' + s[closg+1:]
     return result
+
+
+def extract_year_from_str(str):
+    year = None
+    for s in str.split():
+        if s.isdigit():
+            nbr = int(s)
+            if nbr > 1700 and nbr < 2200:
+                year = int(s)
+    return year

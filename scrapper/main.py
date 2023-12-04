@@ -2,8 +2,8 @@ from scrappers import continente, auchan, gsoares, elcorteingles, ptvineyards, g
 from sqlalchemy import create_engine, text
 from utils.logger import logger, log
 from utils.time import get_current_timestamp
+from utils.parser import extract_year_from_str
 from database import db
-from dateutil.parser import parse
 
 connection_string = "mysql+mysqlconnector://sogrape:hackaton42sogrape@127.0.0.1:3306/sogrape"
 engine = create_engine(connection_string, echo=True)
@@ -54,13 +54,9 @@ def	main():
 			entry["updated_at"] = get_current_timestamp()
 			entry["ean"] = product["id"]
 			entry["store_id"] = store["id"]
-			try:
-				year = parse(entry['name'], fuzzy=True).year
-				if year > 1900 or year < 2100:
-					entry['year'] = year
-			except:
-				logger(log.INFO, f"{product['id']} {product['name']} invalid year!")
+			entry["year"] = extract_year_from_str(entry['name'])
 
+			logger(log.DEBUG, f" Insert DB -- {entry['name']} {entry['year']} --")
 			db.insert_entry(entry)
 			
 		logger(log.INFO, f"{product['id']} {product['name']} finished scrapping!")
