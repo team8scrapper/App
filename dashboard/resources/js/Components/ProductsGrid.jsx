@@ -100,8 +100,6 @@ export default function ProductsGrid({
                                 {product.name}, {product.capacity}ml
                             </p>
 
-                            {product.harvest_year}
-
                             <p className="text-xs mt-2">EAN: {product.id}</p>
                         </div>
                     </Link>

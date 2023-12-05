@@ -126,12 +126,6 @@ export default function Edit({
                                     <strong>Capacity:</strong>{" "}
                                     {product.capacity}ml
                                 </p>
-                                {product.sub_brand && (
-                                    <p className="text-sm mb-0.5">
-                                        <strong>Year:</strong>{" "}
-                                        {product.harvest_year}
-                                    </p>
-                                )}
                             </div>
                         </div>
                         <ProductStats
