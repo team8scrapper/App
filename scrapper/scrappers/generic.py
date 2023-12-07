@@ -73,3 +73,9 @@ def	scrapper(base_url, search_url, ean, results_classes, details_classes):
 	
 	product = get_product_details(base_url, product_url, product_content, details_classes)	
 	return product
+
+
+# print(scrapper("https://www.portugalvineyards.com/pt", "https://www.portugalvineyards.com/pt/search?controller=search&s=", "5601012011500", ".products article.product-miniature a", {
+# 		"name": ".ttvproduct-details-page .ttvproduct-detail-title",
+# 		"price": ".product-prices .current-price .ttvpopup-carrent-price"
+# 	}))
