@@ -7,50 +7,42 @@ headers = {
  }
 
 
-def get_page_results(ean, url):
-	response = requests.get(url + ean, headers=headers)
+def get_page_results(url):
+	response = requests.get(url, headers=headers)
 	if not response:
 		return None
 	return BeautifulSoup(response.text, "html.parser")
 	
 
-def get_product_url(page_results):
-	search_links = page_results.select()
-	if len(search_links) == 0:
+def extract_product_url(page_results, results_classes):
+	result_links = page_results.select(results_classes)
+	if len(result_links) == 0:
 		return None
-	return search_links[0].get("href")
-	
+	return result_links[0].get("href")
 
-def	scrapper(ean, url, search_classes):
-	# Search for the product's ean in the url
-	page_results = get_page_results(ean, url)
+def	get_product_url(base_url, search_url, ean, results_classes):
+	page_results = get_page_results(search_url + ean)
 	if not page_results:
-		print("No page results")
 		return None
-	
-	print(page_results)
-	return None
-	
-	product_url = get_product_url(page_results, search_classes)
+	product_url = extract_product_url(page_results, results_classes)
 	if not product_url:
-		print("No product url found")
 		return None
+	# prepend base_url if the path is relative
+	if product_url[0] == "/":
+		product_url = base_url + product_url
+	return product_url
 	
 
-	# Find the product URL from the search
-	script_tag = soup.find_all("script", {"type": "application/ld+json"})
-	arr = list(map(lambda x: json.loads(x.string), script_tag))
-	url = None
-	for item in arr:
-		if "@type" in item.keys() and item["@type"] == 'ItemList':
-			if not len(item["itemListElement"]):
-				return None
-			url = item["itemListElement"][0]["url"]
-			break
+def	scrapper(base_url, search_url, ean, results_classes):
+	product_url = get_product_url(base_url, search_url, ean, results_classes)
+	if not product_url:
+		return None
+
+	print(product_url)
+	return None
+
 
 	# Search for the product content within the url found	
-	if not url:
-		return None
 	response = requests.get(url, headers=headers)
 	if not response:
 		return None
@@ -75,7 +67,3 @@ def	scrapper(ean, url, search_classes):
 	except:
 		return None
 	return product
-
-
-
-scrapper("5601012011500", "https://www.continente.pt/pesquisa/?q=", ".results-section .product a")
