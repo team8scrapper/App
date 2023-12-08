@@ -22,16 +22,16 @@ def extract_product_url(page_results, results_classes):
 	return result_links[0].get("href")
 
 
-def	get_product_url(base_url, search_url, ean, results_classes):
-	page_results = get_page_results(search_url + ean)
+def	get_product_url(store, ean):
+	page_results = get_page_results(store['search_url'] + ean)
 	if not page_results:
 		return None
-	product_url = extract_product_url(page_results, results_classes)
+	product_url = extract_product_url(page_results, store['results_classes'])
 	if not product_url:
 		return None
 	# prepend base_url if the path is relative
 	if product_url[0] == "/":
-		product_url = base_url + product_url
+		product_url = store['base_url'] + store['product_url']
 	return product_url
 
 
@@ -42,15 +42,13 @@ def get_product_content(product_url):
 	return BeautifulSoup(response.text, "html.parser")
 	
 
-def	get_product_details(base_url, product_url, product_content, details_classes):
+def	get_product_details(store, product_content, product_url):
 	product = {}
-
 	try:
 		# extract data
-		product["name"] = product_content.select(details_classes['name'])[0].text
-		product["price"] = product_content.select(details_classes['price'])[0].text
+		product["name"] = product_content.select(store['name_classes'])[0].text
+		product["price"] = product_content.select(store['price_classes'])[0].text
 		product["url"] = product_url
-		product["description"] = ""
 		product["currency"] = "EUR"
 
 		# cleanup data
@@ -62,8 +60,9 @@ def	get_product_details(base_url, product_url, product_content, details_classes)
 		return None
 
 
-def	scrapper(base_url, search_url, ean, results_classes, details_classes):
-	product_url = get_product_url(base_url, search_url, ean, results_classes)
+def	scrapper(store, ean):
+	product_url = get_product_url(store, ean)
+
 	if not product_url:
 		return None
 	
@@ -71,11 +70,16 @@ def	scrapper(base_url, search_url, ean, results_classes, details_classes):
 	if not product_content:
 		return None
 	
-	product = get_product_details(base_url, product_url, product_content, details_classes)	
+	product = get_product_details(store, product_content, product_url)	
 	return product
 
 
-# print(scrapper("https://www.portugalvineyards.com/pt", "https://www.portugalvineyards.com/pt/search?controller=search&s=", "5601012011500", ".products article.product-miniature a", {
-# 		"name": ".ttvproduct-details-page .ttvproduct-detail-title",
-# 		"price": ".product-prices .current-price .ttvpopup-carrent-price"
-# 	}))
+# store = {
+#     'search_url': "https://www.portugalvineyards.com/pt/search?controller=search&s=",
+#     'base_url': "https://www.portugalvineyards.com/pt",
+#     'results_classes': ".products article.product-miniature a",
+#     'name_classes': ".ttvproduct-details-page .ttvproduct-detail-title",
+#     'price_classes': ".product-prices .current-price .ttvpopup-carrent-price",
+# }
+
+# print(scrapper(store, "5601012011500"))

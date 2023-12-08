@@ -1,4 +1,4 @@
-from scrappers import continente, auchan, gsoares, elcorteingles, ptvineyards, garrafinhas, coop
+from scrappers import continente, auchan, gsoares, elcorteingles, ptvineyards, garrafinhas, coop, generic
 from sqlalchemy import create_engine, text
 from utils.logger import logger, log
 from utils.time import get_current_timestamp
@@ -33,17 +33,24 @@ def	main():
 			# reset entry
 			entry = None
 
-			# Make sure the scrapper is in the scprapper_dict
-			if scrapper_dict.get(store['id']) == None:  
-				logger(log.CRITICAL, f"Store ID {store['id']} {store['name']} has no scrapper in the dictionary!") 
-				continue
-			
-			# Use the store scrapper, if exception is thrown, continue to the next store
-			try:
-				entry = scrapper_dict[store['id']](product["id"], store["search_url"])
-			except:
-				logger(log.ERROR , f"Scrapper {store['name']} for product {product['name']} and EAN {product['id']} failed!")
-				continue
+			if store['use_generic']:
+				logger(log.DEBUG, f"using generic scrapper!!")
+				try:
+					entry = generic.scrapper(store, product["id"])
+				except:
+					logger(log.ERROR , f"Scrapper {store['name']} for product {product['name']} and EAN {product['id']} failed with generic scrapper!")
+					continue
+			else:
+				# Make sure the scrapper is in the scprapper_dict
+				if scrapper_dict.get(store['id']) == None:  
+					logger(log.CRITICAL, f"Store ID {store['id']} {store['name']} has no scrapper in the dictionary!") 
+					continue
+				# Use the store scrapper, if exception is thrown, continue to the next store
+				try:
+					entry = scrapper_dict[store['id']](product["id"], store["search_url"])
+				except:
+					logger(log.ERROR , f"Scrapper {store['name']} for product {product['name']} and EAN {product['id']} failed!")
+					continue
 
 			if not entry:
 				logger(log.INFO, f"{product['id']} was not found in {store['name']}")

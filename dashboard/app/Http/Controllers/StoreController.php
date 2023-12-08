@@ -88,6 +88,12 @@ class StoreController extends Controller
                 'name' => 'required|string|max:255',
                 'search_url' => 'required|string',
                 'logo_url' => 'string|nullable',
+
+                'use_generic' => 'boolean|required',
+                'base_url' => 'string|nullable',
+                'results_classes' => 'string|nullable',
+                'name_classes' => 'string|nullable',
+                'price_classes' => 'string|nullable',
             ]);
 
             $store->update($validated);

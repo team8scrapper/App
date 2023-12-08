@@ -14,6 +14,11 @@ class Store extends Model
         'name',
         'search_url',
         'logo_url',
+        'use_generic',
+        'base_url',
+        'results_classes',
+        'name_classes',
+        'price_classes',
     ];
 
     public function product_entries(): HasMany
