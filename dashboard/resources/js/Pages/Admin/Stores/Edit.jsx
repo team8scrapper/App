@@ -12,7 +12,7 @@ import { IoIosCheckmarkCircle } from "react-icons/io";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toast } from "react-toastify";
 
-const getTestData = async (store) => {
+export const getTestData = async (store) => {
     try {
         const response = await axios.post(`http://localhost:4242/test`, store);
         return response.data;
