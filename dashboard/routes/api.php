@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StoreController;
 
@@ -20,7 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::middleware('auth:sanctum')->get('/test_store', [StoreController::class, 'test']);
+Route::post('/test_store', function (Request $request) {
+    return ["status" => "ok", "content" => "from test_store"];
+});
 
 Route::get('/test', function (Request $request) {
     return "test";
