@@ -22,6 +22,8 @@ class Response(BaseModel):
     results_classes: str
     name_classes: str
     price_classes: str
+    currency: str
+    redirected: bool
     testing_ean: str
 
 
@@ -39,6 +41,8 @@ def read_item(res: Response):
             'results_classes': res.results_classes,
             'name_classes': res.name_classes,
             'price_classes': res.price_classes,
+            'redirected': res.redirected,
+            'currency': res.currency,
         }
 
         resdata = {
@@ -47,10 +51,13 @@ def read_item(res: Response):
              "product_details": None,
         }
 
-        resdata["product_url"] = get_product_url(store, res.testing_ean)
-        if not resdata["product_url"]:
-            return resdata
-        
+        if not store['redirected']:
+            resdata["product_url"] = get_product_url(store, res.testing_ean)
+            if not resdata["product_url"]:
+                return resdata
+        else:
+            resdata["product_url"] = store['search_url'] + res.testing_ean
+
         product_content = get_product_content(resdata["product_url"])
         if not product_content:
             return resdata

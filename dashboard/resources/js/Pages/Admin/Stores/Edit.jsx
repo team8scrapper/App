@@ -39,8 +39,10 @@ export default function Edit({ auth, store }) {
         name: store.name,
         search_url: store.search_url,
         logo_url: store.logo_url,
+        currency: store.currency,
         use_generic: store.use_generic,
         base_url: store.base_url || "",
+        redirected: store.redirected,
         results_classes: store.results_classes || "",
         name_classes: store.name_classes || "",
         price_classes: store.price_classes || "",
@@ -182,6 +184,30 @@ export default function Edit({ auth, store }) {
                             />
                         </div>
 
+                        <div>
+                            <InputLabel htmlFor="currency" value="Currency" />
+
+                            <TextInput
+                                id="currency"
+                                type="text"
+                                name="currency"
+                                value={data.currency}
+                                className="mt-1 block w-full"
+                                onChange={(e) =>
+                                    setData("currency", e.target.value)
+                                }
+                            />
+
+                            <span className="ml-2 text-sm text-gray-600">
+                                Eg: EUR, USD, AUD
+                            </span>
+
+                            <InputError
+                                message={errors.currency}
+                                className="mt-2"
+                            />
+                        </div>
+
                         <div className="block mt-4">
                             <label className="flex items-center">
                                 <Checkbox
@@ -228,6 +254,24 @@ export default function Edit({ auth, store }) {
                                     />
                                 </div>
 
+                                <div className="block mt-4">
+                                    <label className="flex items-center">
+                                        <Checkbox
+                                            name="redirected"
+                                            checked={data.redirected}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "redirected",
+                                                    e.target.checked
+                                                )
+                                            }
+                                        />
+                                        <span className="ml-2 text-sm text-gray-600">
+                                            Has redirect to product page
+                                        </span>
+                                    </label>
+                                </div>
+
                                 <div>
                                     <InputLabel
                                         htmlFor="results_classes"
@@ -238,8 +282,11 @@ export default function Edit({ auth, store }) {
                                         id="results_classes"
                                         type="text"
                                         name="results_classes"
+                                        disabled={data.redirected}
                                         value={data.results_classes}
-                                        className="mt-1 block w-full"
+                                        className={`mt-1 block w-full ${
+                                            data.redirected && "bg-gray-200"
+                                        }`}
                                         onChange={(e) =>
                                             setData(
                                                 "results_classes",

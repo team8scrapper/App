@@ -19,6 +19,8 @@ class Store extends Model
         'results_classes',
         'name_classes',
         'price_classes',
+        'redirected',
+        'currency',
     ];
 
     public function product_entries(): HasMany

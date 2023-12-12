@@ -53,11 +53,11 @@ def	get_product_details(store, product_content, product_url):
 		product["price"] = product_content.select(store['price_classes'])[0]
 		product["price"] = product["price"].find(text=True, recursive=False)
 		product["url"] = product_url
-		product["currency"] = "EUR"
+		product["currency"] = store['currency']
 
 		# cleanup data
 		product["name"] = product["name"].strip("\n");
-		product["price"] = product["price"].strip("\t\n €");
+		product["price"] = product["price"].strip("\t\n €$R");
 		product["price"] = float(parse_decimal(product["price"], locale='pt_PT'))
 		return product
 	except:

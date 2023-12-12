@@ -27,6 +27,9 @@ export default function Stores({ stores, admin }) {
                             Image
                         </th>
                         <th scope="col" className="px-6 py-3">
+                            Currency
+                        </th>
+                        <th scope="col" className="px-6 py-3">
                             Generic
                         </th>
                         <th scope="col" className="px-6 py-3">
@@ -51,6 +54,9 @@ export default function Stores({ stores, admin }) {
                                     className="max-h-8 max-w-20"
                                     src={store.logo_url}
                                 />
+                            </td>
+                            <td className="px-6 font-medium text-gray-900 py-4">
+                                {store.currency}
                             </td>
                             <td className="px-6 font-medium text-gray-900 py-4">
                                 {Boolean(store.use_generic) && (

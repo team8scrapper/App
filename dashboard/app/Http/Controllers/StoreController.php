@@ -47,6 +47,8 @@ class StoreController extends Controller
                 'logo_url' => 'string|nullable',
 
                 'use_generic' => 'boolean|required',
+                'redirected' => 'boolean|required',
+                'currency' => 'string',
                 'base_url' => 'string|nullable',
                 'results_classes' => 'string|nullable',
                 'name_classes' => 'string|nullable',
@@ -96,6 +98,8 @@ class StoreController extends Controller
                 'logo_url' => 'string|nullable',
 
                 'use_generic' => 'boolean|required',
+                'redirected' => 'boolean|required',
+                'currency' => 'string',
                 'base_url' => 'string|nullable',
                 'results_classes' => 'string|nullable',
                 'name_classes' => 'string|nullable',
