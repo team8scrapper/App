@@ -152,7 +152,7 @@ class StoreController extends Controller
             // return $request['testing_ean'];
             $response = Http::withHeaders([
                 'Access-Control-Allow-Origin' => '*'
-            ])->post('http://127.0.0.1:4242/test', $data);
+            ])->post('http://104.248.161.166:4242/test', $data);
             
             // $body = $response->body();
 
