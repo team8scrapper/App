@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 export const getTestData = async (store) => {
     try {
         const response = await axios.post(`/api/test_store`, store, {
+            mode: "no-cors",
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods":
@@ -24,6 +25,7 @@ export const getTestData = async (store) => {
                 "Content-Type": "application/json",
                 crossDomain: true,
             },
+            credentials: "same-origin",
         });
         // const response = await axios.post(`api/test_store`, store);
         // console.log("asdfag", response);

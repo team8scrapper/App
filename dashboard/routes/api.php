@@ -41,8 +41,11 @@ Route::post('/test_store', function (Request $request) {
 
     // return $request['testing_ean'];
     $response = Http::withHeaders([
-        'Access-Control-Allow-Origin' => '*'
-    ])->post('http://104.248.161.166:4242/test', $data);
+        'Access-Control-Allow-Origin' => '*',
+        "Content-Type" => "application/json",
+        "Access-Control-Allow-Methods" => "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        "Access-Control-Allow-Headers" => "append,delete,entries,foreach,get,has,keys,set,values,Authorization",
+    ])->post('http://127.0.0.1:4242/test', $data);
     
     // $body = $response->body();
 

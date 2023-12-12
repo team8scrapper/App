@@ -128,37 +128,4 @@ class StoreController extends Controller
 
         return redirect()->back();
     }
-
-    public function test(Request $request, Store $store)
-    {
-        // if ($request->user()->hasRole('root')) {
-
-            $data = [
-                "name" => $request['name'],
-                "search_url" => $request['search_url'],
-                "logo_url" => $request['logo_url'],
-                "currency" => $request['currency'],
-                "use_generic" => $request['use_generic'],
-                "base_url" => $request['base_url'],
-                "redirected" => $request['redirected'],
-                "results_classes" => $request['results_classes'],
-                "name_classes" => $request['name_classes'],
-                "price_classes" => $request['price_classes'],
-                "testing_ean" => $request['testing_ean'],
-            ];
-
-            return $data;
-
-            // return $request['testing_ean'];
-            $response = Http::withHeaders([
-                'Access-Control-Allow-Origin' => '*'
-            ])->post('http://localhost:4242/test', $data);
-            
-            // $body = $response->body();
-
-            return $response->body();
-        // }
-
-        // return NULL;
-    }
 }
