@@ -14,7 +14,15 @@ import { toast } from "react-toastify";
 
 export const getTestData = async (store) => {
     try {
-        const response = await axios.post(`/api/test_store`, store);
+        const response = await axios.post(`/api/test_store`, store, {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods":
+                    "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+                "Access-Control-Allow-Headers":
+                    "append,delete,entries,foreach,get,has,keys,set,values,Authorization",
+            },
+        });
         // const response = await axios.post(`api/test_store`, store);
         // console.log("asdfag", response);
         return response.data;
