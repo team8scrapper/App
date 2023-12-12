@@ -19,9 +19,9 @@ app.add_middleware(
 class Response(BaseModel):
     search_url: str
     base_url: str
-    results_classes: str
-    name_classes: str
-    price_classes: str
+    results_classes: str | None
+    name_classes: str | None
+    price_classes: str | None
     currency: str
     redirected: bool
     testing_ean: str
@@ -44,6 +44,8 @@ def read_item(res: Response):
             'redirected': res.redirected,
             'currency': res.currency,
         }
+
+        print(store)
 
         resdata = {
              "product_url": None,

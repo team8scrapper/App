@@ -14,7 +14,8 @@ import { toast } from "react-toastify";
 
 export const getTestData = async (store) => {
     try {
-        const response = await axios.post(`http://localhost:4242/test`, store);
+        const response = await axios.post(`/admin/test_store`, store);
+        // console.log("asdfag", response);
         return response.data;
     } catch (error) {
         return error.message;

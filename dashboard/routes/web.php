@@ -52,7 +52,11 @@ Route::prefix('admin')->group(function() {
                 'store' => 'admin.stores.store',
                 'destroy' => 'admin.stores.destroy',
             ]);
-    });
+
+    Route::post('/test_store', [StoreController::class, 'test'])->middleware(['auth', 'verified'])->name('test_store');
+
+});
+
 
 Route::resource('products', ProductPublic::class)
     ->only(['index', 'show'])
