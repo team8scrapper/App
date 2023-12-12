@@ -36,6 +36,8 @@ Route::post('/test_store', function (Request $request) {
         "testing_ean" => $request['testing_ean'],
     ];
 
+    return $data;
+
     // return $request['testing_ean'];
     $response = Http::withHeaders([
         'Access-Control-Allow-Origin' => '*'
