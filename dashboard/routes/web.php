@@ -53,7 +53,7 @@ Route::prefix('admin')->group(function() {
                 'destroy' => 'admin.stores.destroy',
             ]);
 
-    Route::post('/test_store', [StoreController::class, 'test'])->middleware(['auth', 'verified'])->name('test_store');
+    
 
 });
 

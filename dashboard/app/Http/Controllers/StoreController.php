@@ -131,7 +131,7 @@ class StoreController extends Controller
 
     public function test(Request $request, Store $store)
     {
-        if ($request->user()->hasRole('root')) {
+        // if ($request->user()->hasRole('root')) {
 
             $data = [
                 "name" => $request['name'],
@@ -147,7 +147,7 @@ class StoreController extends Controller
                 "testing_ean" => $request['testing_ean'],
             ];
 
-            // return $data;
+            return $data;
 
             // return $request['testing_ean'];
             $response = Http::withHeaders([
@@ -157,8 +157,8 @@ class StoreController extends Controller
             // $body = $response->body();
 
             return $response->body();
-        }
+        // }
 
-        return NULL;
+        // return NULL;
     }
 }
