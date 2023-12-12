@@ -44,9 +44,9 @@ Route::post('/test_store', function (Request $request) {
         'Access-Control-Allow-Origin' => '*',
         "Content-Type" => "application/json",
         "Access-Control-Allow-Methods" => "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        "Access-Control-Allow-Headers" => "append,delete,entries,foreach,get,has,keys,set,values,Authorization",
+        "Access-Control-Allow-Headers" => "append,delete,entries,foreach,get,has,keys,set,values,Authorization, Content-Type",
         'Access-Control-Allow-Credentials' => true
-    ])->post('http://127.0.0.1:4242/test', $data);
+    ])->post('http://localho.st:4242/test', $data);
     
     // $body = $response->body();
 
