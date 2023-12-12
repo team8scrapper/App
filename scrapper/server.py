@@ -6,11 +6,11 @@ from scrappers.generic import scrapper, get_product_url, get_product_content, ge
 
 app = FastAPI()
 
-origins = ['http://127.0.0.1:8000', 'https://127.0.0.1:5173']
+origins = ['*', 'http://104.248.161.166', 'http://127.0.0.1:8000', 'https://127.0.0.1:5173']
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[origins],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
