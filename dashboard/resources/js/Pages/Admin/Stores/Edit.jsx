@@ -26,6 +26,7 @@ export const getTestData = async (store) => {
                 crossDomain: true,
             },
             credentials: "same-origin",
+            withCredentials: false,
         });
         // const response = await axios.post(`api/test_store`, store);
         // console.log("asdfag", response);
