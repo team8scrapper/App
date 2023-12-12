@@ -53,6 +53,13 @@ export default function ProductStats({
 }) {
     if (!todaysPrices || !todaysPrices?.length) return;
 
+    todaysPrices = todaysPrices.filter(
+        (p) => p.currency == "EUR" || p.currency == "€"
+    );
+    yesterdaysPrices = yesterdaysPrices.filter(
+        (p) => p.currency == "EUR" || p.currency == "€"
+    );
+
     const lowestPrice = getLowestPrice(todaysPrices);
     const averagePrice = getAveragePrice(todaysPrices);
 

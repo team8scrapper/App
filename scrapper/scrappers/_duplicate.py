@@ -8,6 +8,7 @@ engine = create_engine(connection_string, echo=True)
 def duplicate():
     with engine.connect() as connection:
         query = text("SELECT * FROM product_entries WHERE DATE(updated_at) = DATE(curdate())")
+        # query = text("SELECT * FROM product_entries WHERE DATE(updated_at) = DATE('2023-12-07')")
         entries = connection.execute(query)
         total = 0
     
@@ -22,8 +23,8 @@ def duplicate():
         dup['product_name'] = product["product_name"]
         dup['currency'] = product["currency"]
         dup['year'] = product["year"]
-        dup["created_at"] = product["created_at"].replace(day=3).strftime('%Y-%m-%d %H:%M:%S')
-        dup["updated_at"] = product["updated_at"].replace(day=3).strftime('%Y-%m-%d %H:%M:%S')
+        dup["created_at"] = product["created_at"].replace(day=6).strftime('%Y-%m-%d %H:%M:%S')
+        dup["updated_at"] = product["updated_at"].replace(day=6).strftime('%Y-%m-%d %H:%M:%S')
         # print(dup)
         # print("total: ", total, "ID:", product["id"], "Product:" , product["product_name"], "created_at:", product["created_at"].replace(day=29), "updated_at:", product["updated_at"].replace(day=29))
         
