@@ -23,8 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/test_store', function (Request $request) {
 
-    return ["data" => "asfas"];
-
     $data = [
         "name" => $request['name'],
         "search_url" => $request['search_url'],
