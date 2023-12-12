@@ -65,12 +65,14 @@ def	get_product_details(store, product_content, product_url):
 
 
 def	scrapper(store, ean):
-	product_url = get_product_url(store, ean)
+	if not store['redirected']:
+		product_url = get_product_url(store, ean)
+	else:
+		product_url = store['search_url'] + ean
 
 	if not product_url:
-		# print("no product")
 		return None
-	
+
 	# print(product_url)
 	product_content = get_product_content(product_url)
 	if not product_content:
@@ -82,11 +84,13 @@ def	scrapper(store, ean):
 
 
 # store = {
-#     'search_url': "https://drive.carrefour.be/fr/search?text=",
-#     'base_url': "https://drive.carrefour.be",
-#     'results_classes': ".product__grid .product-item a",
-#     'name_classes': ".product-details .prod-title",
-#     'price_classes': ".product-details .prod-price .showRed :nth-child(2)",
+#     'search_url': "https://www.deebee.co.uk/product/search/q/",
+#     'base_url': "https://www.deebee.co.uk",
+#     'results_classes': "",
+#     'name_classes': "#product-results .hproduct a.fn",
+#     'price_classes': "#product-results .hproduct .cost-band .price",
+# 	'redirected': True,
+# 	'currency': "EUR",
 # }
 
 # print(scrapper(store, "5601012011500"))

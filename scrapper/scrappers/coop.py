@@ -47,7 +47,7 @@ def	scrapper(ean, url):
 	product = {}
 	try:
 		product["url"] = "https://www.coop.ch" + search_results[0]['href']
-		product["currency"] = "EUR" # forcing EUR
+		product["currency"] = "CHF" # forcing CHF
 		product["name"] = search_results[0]['title']
 		product["price"] = float(search_results[0]['price'])
 	except:
