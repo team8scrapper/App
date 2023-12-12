@@ -21,6 +21,7 @@ export const getTestData = async (store) => {
                     "GET,PUT,POST,DELETE,PATCH,OPTIONS",
                 "Access-Control-Allow-Headers":
                     "append,delete,entries,foreach,get,has,keys,set,values,Authorization",
+                "Content-Type": "application/json",
             },
         });
         // const response = await axios.post(`api/test_store`, store);
