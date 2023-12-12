@@ -32,9 +32,19 @@ function groupPricesByDate(records) {
 
 function getMinPrices(arr) {
     return arr?.map((day) => {
-        const minPrice = Math.min(...day.map((entry) => entry.price));
-        if (minPrice == Infinity) return null;
-        return minPrice;
+        if (!day?.length) {
+            return null;
+        }
+        let min = day[0].price;
+        day.forEach((entry) => {
+            if (entry.price < min) min = entry.price;
+        });
+        // console.log({ c: +min.toFixed(2) });
+        return +min.toFixed(2);
+
+        // const minPrice = Math.min(...day.map((entry) => entry.price));
+        // if (minPrice == Infinity) return null;
+        // return minPrice;
     });
 }
 
@@ -42,7 +52,7 @@ function getMaxPrices(arr) {
     return arr?.map((day) => {
         const minPrice = Math.max(...day.map((entry) => entry.price));
         if (minPrice == -Infinity) return null;
-        return minPrice;
+        return +minPrice.toFixed(2);
     });
 }
 
@@ -90,6 +100,7 @@ function getMinForTheWeek(week) {
     week.forEach((value) => {
         if (typeof value == "number" && value < min) min = value;
     });
+    if (min == 1.7976931348623157e308) return null;
     return min;
 }
 
