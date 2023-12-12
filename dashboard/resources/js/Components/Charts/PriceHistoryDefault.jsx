@@ -105,6 +105,9 @@ function getMinForTheWeek(week) {
 }
 
 function PriceHistoryDefault({ history }) {
+    // TODO only supports EUR, we're removing other currencies here
+    history = history?.filter((hist) => hist.store.currency === "EUR");
+
     const groupedEntries = groupPricesByDate(history);
     const chartData = fillData(groupedEntries);
 

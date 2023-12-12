@@ -189,9 +189,10 @@ export default function Edit({
                                         <p className="text-2xl font-bold">
                                             {entry.price.toFixed(2)}
 
-                                            {entry.currency == "EUR"
-                                                ? "€"
-                                                : "€"}
+                                            <span className="text-sm">
+                                                {" "}
+                                                {entry.currency}
+                                            </span>
                                         </p>
                                         <p className="text-xs">
                                             {dayjs(entry.updated_at).fromNow()}
