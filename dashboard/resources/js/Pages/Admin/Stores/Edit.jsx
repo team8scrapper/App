@@ -22,6 +22,7 @@ export const getTestData = async (store) => {
                 "Access-Control-Allow-Headers":
                     "append,delete,entries,foreach,get,has,keys,set,values,Authorization",
                 "Content-Type": "application/json",
+                crossDomain: true,
             },
         });
         // const response = await axios.post(`api/test_store`, store);
