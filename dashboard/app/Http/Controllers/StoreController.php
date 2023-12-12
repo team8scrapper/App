@@ -147,7 +147,7 @@ class StoreController extends Controller
                 "testing_ean" => $request['testing_ean'],
             ];
 
-            return $data;
+            // return $data;
 
             // return $request['testing_ean'];
             $response = Http::withHeaders([
