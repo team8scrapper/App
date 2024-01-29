@@ -101,3 +101,5 @@ https://laravel.com/docs/10.x/deployment
 1. It's powered by a Laravel Backend, that uses the MVC architecture.
 2. The front end uses React to provide better interactivity and user experience.
 3. Uses Inertia that allows the creation of fully client-side rendered, single-page apps, without the complexity that comes with modern SPAs.
+
+.
