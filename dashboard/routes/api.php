@@ -37,8 +37,6 @@ Route::post('/test_store', function (Request $request) {
         "testing_ean" => $request['testing_ean'],
     ];
 
-    return $data;
-
     // return $request['testing_ean'];
     $response = Http::withHeaders([
         'Access-Control-Allow-Origin' => '*',
@@ -46,7 +44,7 @@ Route::post('/test_store', function (Request $request) {
         "Access-Control-Allow-Methods" => "GET,PUT,POST,DELETE,PATCH,OPTIONS",
         "Access-Control-Allow-Headers" => "append,delete,entries,foreach,get,has,keys,set,values,Authorization, Content-Type",
         'Access-Control-Allow-Credentials' => true
-    ])->post('http://12.1.21.12:4242/asdfasdf', $data);
+    ])->post('http://127.0.0.1:4242/test', $data);
     
     // $body = $response->body();
 
