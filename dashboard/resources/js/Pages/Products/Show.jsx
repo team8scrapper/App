@@ -187,7 +187,7 @@ export default function Edit({
 
                                     <div className="text-right">
                                         <p className="text-2xl font-bold">
-                                            {entry.price.toFixed(2)}
+                                            {entry?.price?.toFixed(2)}
 
                                             <span className="text-sm">
                                                 {" "}

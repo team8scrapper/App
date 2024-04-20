@@ -37,9 +37,10 @@ function getMinPrices(arr) {
         }
         let min = day[0].price;
         day.forEach((entry) => {
-            if (entry.price < min) min = entry.price;
+            if (entry?.price < min) min = entry.price;
         });
         // console.log({ c: +min.toFixed(2) });
+        if (!min) min = 0;
         return +min.toFixed(2);
 
         // const minPrice = Math.min(...day.map((entry) => entry.price));

@@ -86,12 +86,16 @@ Start the front-end development server
 Set database values in .env
 Import databse
 
+    update env type of DB and credentials
+
     php artisan key:generate
 
     sudo chgrp -R www-data storage bootstrap/cache
     sudo chmod -R ug+rwx storage bootstrap/cache
 
     php artisan serve
+
+    php artisan migrate
 
 Laravel has great documentation on how to deploy here:
 https://laravel.com/docs/10.x/deployment
