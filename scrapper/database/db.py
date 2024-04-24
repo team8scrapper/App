@@ -24,7 +24,6 @@ def insert_entry(new_entry):
                     "url": new_entry["url"], "year": new_entry["year"]}
             with engine.connect() as connection:
                 connection.execute(sql, args)
-            # connection.close()
 
         # Insert new entry
         else:
@@ -34,4 +33,3 @@ def insert_entry(new_entry):
                 ":year)")
             with engine.connect() as connection:
                 connection.execute(sql, new_entry)
-            # connection.close()
