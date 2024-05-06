@@ -72,8 +72,8 @@ def main():
 
             logger(log.DEBUG, f" Insert DB -- {entry['name']} {entry['year']} --")
             db.insert_entry(entry)
-        print("-----------------------| Scraper has finished |---------------------------")
         logger(log.INFO, f"{product['id']} {product['name']} finished scrapping!")
+    print("-----------------------| Scraper has finished |---------------------------")
 
 
 if __name__ == "__main__":
