@@ -28,6 +28,7 @@ def main():
     stores = list(stores.mappings())
 
     for product in products.mappings():
+        print("-------------------------------------------------------------------------------")
         print("\nEAN:", product["id"], "Product:", product["name"], "Brand:", product["brand"])
         for store in stores:
             # reset entry
@@ -71,7 +72,7 @@ def main():
 
             logger(log.DEBUG, f" Insert DB -- {entry['name']} {entry['year']} --")
             db.insert_entry(entry)
-
+        print("-----------------------| Scraper has finished |---------------------------")
         logger(log.INFO, f"{product['id']} {product['name']} finished scrapping!")
 
 
