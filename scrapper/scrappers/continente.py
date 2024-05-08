@@ -20,6 +20,7 @@ def	scrapper(ean, url):
 	script_tag = soup.find_all("script", {"type": "application/ld+json"})
 	arr = list(map(lambda x: json.loads(x.string), script_tag))
 	url = None
+	# Sets the var 'URL' to product's page URL
 	for item in arr:
 		if "@type" in item.keys() and item["@type"] == 'ItemList':
 			if not len(item["itemListElement"]):
